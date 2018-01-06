@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { firebase } from 'react-redux-firebase'
 
-import './Todo.css'
+import './styles.css'
 
 class TodoItem extends Component {
   static propTypes = {
@@ -19,6 +19,7 @@ class TodoItem extends Component {
     const deleteTodo = (event) => {
        firebase.remove(`/todos/${id}`)
     }
+
     return (
       <li className="Todo">
         <input

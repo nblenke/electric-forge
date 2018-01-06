@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
 import {
@@ -9,39 +8,19 @@ import {
   dataToJS,
   pathToJS,
 } from 'react-redux-firebase'
-import TodoItem from '../../TodoItem'
-import Login from '../../Login'
+import TodoItem from '../../components/TodoItem'
 
-
-class App extends Component {
-  static propTypes = {
-    todos: PropTypes.object,
-    firebase: PropTypes.shape({
-      push: PropTypes.func.isRequired
+class Home extends Component {
+  handleAdd = () => {
+    const { firebase } = this.props
+    firebase.push('/todos', {
+      text: this.input.value,
+      done: false
     })
   }
 
-  handleAdd = () => {
-    const { firebase } = this.props
-    firebase.push('/todos', { text: this.input.value, done: false })
-    // newTodo.value = ''
-  }
-
-  handleClick = (ev) => {
-    // const { auth, firebase } = this.props
-    //
-    // firebase.push('/players', {
-    //   [auth.uid]: {
-    //     0: {
-    //       x: ev.screenX,
-    //       y: ev.screenY,
-    //     }
-    //   }
-    // })
-  }
-
   render () {
-    const { ships, todos } = this.props
+    const { auth, todos } = this.props
     const todosList = (!isLoaded(todos))
       ? 'Loading'
       : (isEmpty(todos))
@@ -53,15 +32,18 @@ class App extends Component {
     return (
       <div className='App'>
         <div className='App-todos'>
-          <h4>Todos List</h4>
           {todosList}
-          <h4>New Todo</h4>
-          <input type='text' ref={ref => { this.input = ref }} />
-          <button onClick={this.handleAdd}>
-            Add
-          </button>
+
+          {auth && auth.displayName ? (
+            <div>
+              <input type='text' ref={ref => { this.input = ref }} />
+              <button onClick={this.handleAdd}>
+                Add
+              </button>
+            </div>
+          ) : null}
+
         </div>
-        <Login />
       </div>
     )
   }
@@ -82,4 +64,4 @@ export default compose(
       todos: dataToJS(firebase, 'todos'),
     })
   )
-)(App)
+)(Home)

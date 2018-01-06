@@ -1,69 +1,41 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
 import GoogleButton from 'react-google-button'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
+import { push } from 'react-router-redux'
 import {
   firebaseConnect,
   isLoaded,
-  isEmpty,
   pathToJS
 } from 'react-redux-firebase'
 
 class Login extends Component {
-  static propTypes = {
-    firebase: PropTypes.shape({
-      login: PropTypes.func.isRequired
-    })
-  }
-
-  state = {
-    isLoading: false
-  }
-
   googleLogin = loginData => {
-    this.setState({ isLoading: true })
     return this.props.firebase
       .login({ provider: 'google' })
       .then(() => {
-        this.setState({ isLoading: false })
-        // this is where you can redirect to another route
+        push('/')
       })
       .catch((error) => {
-        this.setState({ isLoading: false })
         console.log('there was an error', error)
-        console.log('error prop:', this.props.authError) // thanks to connect
+        console.log('error prop:', this.props.authError)
       })
   }
 
   render () {
-    const { auth, authError } = this.props
-    const { snackCanOpen } = this.state
+    const { auth } = this.props
 
-    if (!isLoaded(auth)) {
+    if (auth && auth.isAnonymous) {
       return (
         <div>
-          <span>Loading</span>
-        </div>
-      )
-    }
-
-    if (isEmpty(auth)) {
-      return (
-        <div>
-          <span>Login page</span>
           <GoogleButton onClick={this.googleLogin} />
         </div>
       )
     }
 
-    return (
-      <p>Welcome {auth.displayName}({auth.email})</p>
-    )
-
+    return false
   }
 }
-
 
 export default compose(
   firebaseConnect(),

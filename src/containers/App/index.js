@@ -5,7 +5,10 @@ import {
   Link
 } from 'react-router-dom'
 import { Provider } from 'react-redux'
+import About from '../About/'
 import Home from '../Home/'
+import Header from '../../components/Header/'
+import Login from '../Login/'
 import configureStore from '../../store'
 import './styles.css'
 
@@ -14,17 +17,13 @@ const store = configureStore(initialState)
 
 export default () => (
   <Provider store={store}>
-      <Router>
+    <Router>
       <div>
-        <ul>
-          <li><Link to="/">Home</Link></li>
-          <li><Link to="/about">About</Link></li>
-          <li><Link to="/topics">Topics</Link></li>
-        </ul>
-
-        <hr/>
+        <Header />
 
         <Route exact path="/" component={Home}/>
+        <Route exact path="/about" component={About}/>
+        <Route exact path="/login" component={Login}/>
       </div>
     </Router>
   </Provider>
