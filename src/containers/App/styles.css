@@ -1,0 +1,50 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 80px;
+}
+
+.App-header {
+  background-color: #222;
+  height: 150px;
+  padding: 20px;
+  color: white;
+}
+
+.App-intro {
+  font-size: large;
+}
+
+.App-Url {
+  margin-left: 1rem;
+}
+.App-Car {
+  margin: 1rem;
+}
+
+
+@keyframes App-logo-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.foo {
+  position: relative;
+  width: 300px;
+  height: 300px;
+  outline: 1px solid red;
+}
+
+.ship {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background: red;
+}
+
+.ship--selected {
+  background: green;
+}
