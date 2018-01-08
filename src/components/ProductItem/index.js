@@ -4,36 +4,36 @@ import { firebase } from 'react-redux-firebase'
 
 import './styles.css'
 
-class TodoItem extends Component {
+class ProductItem extends Component {
   static propTypes = {
     todo: PropTypes.object,
     id: PropTypes.string
   }
 
   render(){
-    const {firebase, todo, id} = this.props
+    const {firebase, product, id} = this.props
     const toggleDone = () => {
-      firebase.set(`/todos/${id}/done`, !todo.done)
+      firebase.set(`/products/${id}/done`, !product.done)
     }
 
-    const deleteTodo = (event) => {
-       firebase.remove(`/todos/${id}`)
+    const deleteProduct = (event) => {
+       firebase.remove(`/products/${id}`)
     }
 
     return (
-      <li className="Todo">
+      <li class="product-item">
         <input
           className="Todo-Input"
           type="checkbox"
-          checked={todo.done}
+          checked={product.done}
           onChange={toggleDone}
         />
-        {todo.text || todo.name}
-        <button className="Todo-Button" onClick={deleteTodo}>
+        {product.text || product.name}
+        <button onClick={deleteProduct}>
           Delete
         </button>
       </li>
     )
   }
 }
-export default firebase()(TodoItem)
+export default firebase()(ProductItem)

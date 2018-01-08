@@ -1,0 +1,9 @@
+$green: green;
+
+body {
+	font-family: sans-serif;
+}
+
+@mixin foo {
+	color: $green;
+}
