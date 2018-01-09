@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { firebase } from 'react-redux-firebase'
-
 import './styles.css'
 
 class ProductItem extends Component {
