@@ -2,6 +2,8 @@ import React from 'react'
 
 export default () => (
   <footer>
-    Footer
+    <div className="container">
+
+    </div>
   </footer>
 )

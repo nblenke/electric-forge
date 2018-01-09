@@ -6,7 +6,8 @@ import {
   isEmpty,
   pathToJS
 } from 'react-redux-firebase'
-import { Link } from 'react-router-dom'
+// import { Link } from 'react-router-dom'
+import { Nav, Navbar, NavItem } from 'react-bootstrap'
 
 class Header extends Component {
   constructor(props) {
@@ -32,24 +33,46 @@ class Header extends Component {
     const { auth } = this.props
 
     return (
+      <div>
+
+      <Navbar inverse collapseOnSelect>
+    		<Navbar.Header>
+    			<Navbar.Brand>
+    				<a href="/">Electric Forge</a>
+    			</Navbar.Brand>
+    			<Navbar.Toggle />
+    		</Navbar.Header>
+    		<Navbar.Collapse>
+    			<Nav>
+    				<NavItem href="/about">
+    					About
+    				</NavItem>
+    			</Nav>
+
+          {auth && auth.displayName ? (
+            <Nav pullRight>
+              <NavItem href="/account">
+                My Account
+              </NavItem>
+
+              <NavItem onClick={this.handleSignOut}>
+                Sign Out
+              </NavItem>
+            </Nav>
+          ) : (
+            <Nav pullRight>
+              <NavItem href="/login">
+                Sign In
+              </NavItem>
+            </Nav>
+          )}
+
+    		</Navbar.Collapse>
+    	</Navbar>
+
       <header>
-        Header<br />
-        {auth && auth.displayName ? (
-          <div>
-            <div>Welcome {auth.displayName}({auth.email})</div>
-            <Link to="/account">My Account</Link> |
-            <Link to="" onClick={this.handleSignOut}>Sign Out</Link>
-          </div>
-        ) : (
-          <div>
-            <Link to="/login">Sign In</Link>
-          </div>
-        )}
-        <ul>
-          <li><Link to="/">Home</Link></li>
-          <li><Link to="/about">About</Link></li>
-        </ul>
       </header>
+      </div>
     )
   }
 }

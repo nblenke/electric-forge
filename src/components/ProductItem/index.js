@@ -1,18 +1,13 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
+// import PropTypes from 'prop-types'
 import { firebase } from 'react-redux-firebase'
 import './styles.css'
 
 class ProductItem extends Component {
-  static propTypes = {
-    todo: PropTypes.object,
-    id: PropTypes.string
-  }
-
   render(){
-    const {firebase, product, id} = this.props
+    const { firebase, hasDelete, hasForSale, id, product } = this.props
     const toggleDone = () => {
-      firebase.set(`/products/${id}/done`, !product.done)
+      firebase.set(`/products/${id}/forSale`, !product.done)
     }
 
     const deleteProduct = (event) => {
@@ -20,18 +15,33 @@ class ProductItem extends Component {
     }
 
     return (
-      <li class="product-item">
-        <input
-          className="Todo-Input"
-          type="checkbox"
-          checked={product.done}
-          onChange={toggleDone}
-        />
-        {product.text || product.name}
-        <button onClick={deleteProduct}>
-          Delete
-        </button>
-      </li>
+      <div className="col-xs-12 col-sm-6 col-md-4 product-item">
+        <div className="thumbnail">
+          <img src="http://placehold.it/800x500" alt="" />
+          <div className="caption">
+            <h3>{product.text || product.name}</h3>
+            {hasForSale ?
+              <div className="row">
+                <input
+                  className="Todo-Input"
+                  type="checkbox"
+                  checked={product.done}
+                  onChange={toggleDone}
+                /> For Sale
+              </div>
+            : null }
+            <div className="row">
+              {hasDelete ?
+                  <button className="btn btn-primary" onClick={deleteProduct}>
+                    Delete
+                  </button>
+              : null}
+              <a href="" className="btn btn-primary">Buy Now!</a>
+              <a href="" className="btn btn-default">Details</a>
+            </div>
+          </div>
+        </div>
+      </div>
     )
   }
 }

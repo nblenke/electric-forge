@@ -3,45 +3,34 @@ import { compose } from 'redux'
 import { connect } from 'react-redux'
 import {
   firebaseConnect,
-  isLoaded,
-  isEmpty,
+  // isLoaded,
+  // isEmpty,
   dataToJS,
-  pathToJS,
+  // pathToJS,
 } from 'react-redux-firebase'
-import ProductItem from '../../components/ProductItem'
+import ProductList from '../../components/ProductList'
 
 class Home extends Component {
-  handleAdd = () => {
-    const { firebase } = this.props
-    firebase.push('/products', {
-      text: this.input.value,
-      done: false
-    })
-  }
-
   render () {
-    const { auth, products } = this.props
-    const productsList = (!isLoaded(products))
-      ? 'Loading'
-      : (isEmpty(products))
-        ? 'No products'
-        : Object.keys(products).map((key) => (
-          <ProductItem key={key} id={key} product={products[key]} />
-        ))
-
+    const { products } = this.props
     return (
-      <div>
-        {productsList}
-
-        {auth && auth.displayName ? (
-          <div>
-            <input type='text' ref={ref => { this.input = ref }} />
-            <button onClick={this.handleAdd}>
-              Add
-            </button>
+      <div className="container">
+        <header className="jumbotron hero-spacer">
+          <h1>Lorem ipsum dolor</h1>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsa, ipsam, eligendi, in quo sunt possimus non incidunt odit vero aliquid similique quaerat nam nobis illo aspernatur vitae fugiat numquam repellat.</p>
+          <p><a className="btn btn-primary btn-large">Call to action!</a>
+          </p>
+        </header>
+        <hr />
+        <div className="row">
+          <div className="col-lg-12">
+            <h3>Top Products</h3>
           </div>
-        ) : null}
+        </div>
 
+        <div className="row text-center">
+          <ProductList products={products} />
+        </div>
       </div>
     )
   }
@@ -58,7 +47,7 @@ export default compose(
   ]),
   connect(
     ({ firebase }) => ({
-      auth: pathToJS(firebase, 'auth'),
+      // auth: pathToJS(firebase, 'auth'),
       products: dataToJS(firebase, 'products'),
     })
   )
