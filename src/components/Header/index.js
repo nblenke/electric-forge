@@ -3,7 +3,6 @@ import { compose } from 'redux'
 import { connect } from 'react-redux'
 import {
   firebaseConnect,
-  isEmpty,
   pathToJS
 } from 'react-redux-firebase'
 // import { Link } from 'react-router-dom'
@@ -13,15 +12,6 @@ class Header extends Component {
   constructor(props) {
     super(props)
     this.handleSignOut = this.handleSignOut.bind(this)
-  }
-
-  componentDidMount() {
-    const { firebase } = this.props
-    firebase.auth().onAuthStateChanged(function(user) {
-      if (isEmpty(user)) {
-        firebase.auth().signInAnonymously()
-      }
-    });
   }
 
   handleSignOut(ev) {

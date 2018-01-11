@@ -22,10 +22,10 @@ export default () => (
       <div>
         <Header />
         <div className="container">
-          <Route exact path="/" component={Home}/>
-          <Route exact path="/about" component={About}/>
-          <Route exact path="/account" component={Account}/>
-          <Route exact path="/login" component={Login}/>
+          <Route exact path="/" component={Home} />
+          <Route exact path="/about" component={About} />
+          <Route exact path="/account" component={Account} />
+          <Route exact path="/login" component={Login} />
         </div>
         <Footer />
       </div>

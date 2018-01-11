@@ -2,10 +2,9 @@ import React, { Component } from 'react'
 import GoogleButton from 'react-google-button'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
-import { push } from 'react-router-redux'
+// import { push } from 'react-router-redux'
 import {
   firebaseConnect,
-  // isLoaded,
   pathToJS
 } from 'react-redux-firebase'
 
@@ -13,9 +12,6 @@ class Login extends Component {
   googleLogin = loginData => {
     return this.props.firebase
       .login({ provider: 'google' })
-      .then(() => {
-        push('/')
-      })
       .catch((error) => {
         console.log('there was an error', error)
         console.log('error prop:', this.props.authError)
@@ -25,16 +21,16 @@ class Login extends Component {
   render () {
     const { auth } = this.props
 
-    if (auth && auth.isAnonymous) {
-      return (
-        <div>
-        Sign In
-          <GoogleButton onClick={this.googleLogin} />
-        </div>
-      )
-    }
-
-    return false
+    return (
+      <div>
+        {!auth ?
+          <div>
+            Sign In
+              <GoogleButton onClick={this.googleLogin} />
+          </div>
+        : null }
+      </div>
+    )
   }
 }
 
