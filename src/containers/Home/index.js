@@ -6,7 +6,7 @@ import {
   // isLoaded,
   // isEmpty,
   dataToJS,
-  // pathToJS,
+  pathToJS,
 } from 'react-redux-firebase'
 import ProductList from '../../components/ProductList'
 
@@ -15,19 +15,26 @@ class Home extends Component {
     const { products } = this.props
     return (
       <div className="container">
-        <header className="jumbotron hero-spacer">
-          <h1>Lorem ipsum dolor</h1>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsa, ipsam, eligendi, in quo sunt possimus non incidunt odit vero aliquid similique quaerat nam nobis illo aspernatur vitae fugiat numquam repellat.</p>
-          <p><a className="btn btn-primary btn-large">Call to action!</a>
-          </p>
-        </header>
-        <hr />
+        <section className="jumbotron hero-spacer">
+          <h1>Start Mining Today!</h1>
+          <h2>Electric Forge provides 100% of the resources and tools
+           you need to mine CryptoCoins, including BitCoin and Ethereum</h2>
+        </section>
+
         <div className="row">
           <div className="col-lg-12">
-            <h3>Top Products</h3>
+            <h3>Operational Rigs</h3>
           </div>
         </div>
+        <div className="row text-center">
+          <ProductList products={products} />
+        </div>
 
+        <div className="row">
+          <div className="col-lg-12">
+            <h3>Available Rigs</h3>
+          </div>
+        </div>
         <div className="row text-center">
           <ProductList products={products} />
         </div>
@@ -47,7 +54,7 @@ export default compose(
   ]),
   connect(
     ({ firebase }) => ({
-      // auth: pathToJS(firebase, 'auth'),
+      auth: pathToJS(firebase, 'auth'),
       products: dataToJS(firebase, 'products'),
     })
   )

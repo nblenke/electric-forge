@@ -5,8 +5,9 @@ import {
   firebaseConnect,
   pathToJS
 } from 'react-redux-firebase'
-// import { Link } from 'react-router-dom'
-import { Nav, Navbar, NavItem } from 'react-bootstrap'
+import { Link } from 'react-router-dom'
+import { Navbar } from 'react-bootstrap'
+import './styles.css'
 
 class Header extends Component {
   constructor(props) {
@@ -17,52 +18,40 @@ class Header extends Component {
   handleSignOut(ev) {
     ev.preventDefault()
     this.props.firebase.auth().signOut()
+    window.location.reload()
   }
 
   render () {
     const { auth } = this.props
 
     return (
-      <div>
-
       <Navbar inverse collapseOnSelect>
     		<Navbar.Header>
     			<Navbar.Brand>
-    				<a href="/">Electric Forge</a>
+    				<Link to="/" className="logo">
+              <img src={process.env.PUBLIC_URL + '/images/logo.png'} alt="logo" />
+            </Link>
     			</Navbar.Brand>
     			<Navbar.Toggle />
     		</Navbar.Header>
     		<Navbar.Collapse>
-    			<Nav>
-    				<NavItem href="/about">
-    					About
-    				</NavItem>
-    			</Nav>
+          <ul className="nav navbar-nav">
+  			    <li><Link to="/about">How it works</Link></li>
+            <li><Link to="/rigs">Rigs</Link></li>
+          </ul>
 
           {auth && auth.displayName ? (
-            <Nav pullRight>
-              <NavItem href="/account">
-                My Account
-              </NavItem>
-
-              <NavItem onClick={this.handleSignOut}>
-                Sign Out
-              </NavItem>
-            </Nav>
+            <ul className="nav navbar-nav navbar-right">
+              <li><Link to="/account">My Wallet</Link></li>
+              <li><a onClick={this.handleSignOut}>Sign Out</a></li>
+            </ul>
           ) : (
-            <Nav pullRight>
-              <NavItem href="/login">
-                Sign In
-              </NavItem>
-            </Nav>
+            <ul className="nav navbar-nav navbar-right">
+              <li><Link to="/login">Sign In</Link></li>
+            </ul>
           )}
-
     		</Navbar.Collapse>
     	</Navbar>
-
-      <header>
-      </header>
-      </div>
     )
   }
 }

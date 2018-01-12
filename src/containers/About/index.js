@@ -1,64 +1,45 @@
 import React from 'react'
+import './styles.css'
 
 export default () => (
-  <div>
-    <div className="row text-center">
-      <h1>Praesent commodo cursus magna</h1>
-    </div>
-    <div className="row text-center">
-    <p>Donec sed odio dui. Etiam porta sem malesuada
-    magna mollis euismod. Nullam id dolor id nibh ultricies
-    vehicula ut id elit. Morbi leo risus, porta ac consectetur ac,
-    vestibulum at eros. Praesent commodo cursus magna.</p>
-    </div>
-
-    <br />
-    <br />
-    <br />
-
+  <div className="about-page">
     <div className="row">
-      <div className="col-xs-12 col-sm-4 text-center">
-        <br />
-        <img className="img-circle" src="http://placehold.it/800x500"
-          alt="Generic placeholder" width="140" height="140" />
-        <h2>Donec sed odio dui</h2>
-      </div>
-      <div className="col-xs-12 col-sm-8">
-        <h2>Nullam id dolor</h2>
-        <p>Donec sed odio dui. Etiam porta sem malesuada
-        magna mollis euismod. Nullam id dolor id nibh ultricies
-        vehicula ut id elit. Morbi leo risus, porta ac consectetur ac,
-        vestibulum at eros. Praesent commodo cursus magna.</p>
+      <div className="col-xs-12">
+        <h3>How it works:</h3>
+        <p>Electric Forge provides 100% of the resources and tools
+         you need to mine CryptoCoins, including BitCoin and Ethereum:</p>
 
-        <p>Donec sed odio dui. Etiam porta sem malesuada
-        magna mollis euismod. Nullam id dolor id nibh ultricies
-        vehicula ut id elit. Morbi leo risus, porta ac consectetur ac,
-        vestibulum at eros. Praesent commodo cursus magna.</p>
       </div>
     </div>
-
-    <br />
-    <br />
-    <br />
 
     <div className="row">
       <div className="col-xs-12 col-sm-8">
-        <h2>Donec sed odio dui</h2>
-        <p>Donec sed odio dui. Etiam porta sem malesuada
-        magna mollis euismod. Nullam id dolor id nibh ultricies
-        vehicula ut id elit. Morbi leo risus, porta ac consectetur ac,
-        vestibulum at eros. Praesent commodo cursus magna.</p>
-
-        <p>Donec sed odio dui. Etiam porta sem malesuada
-        magna mollis euismod. Nullam id dolor id nibh ultricies
-        vehicula ut id elit. Morbi leo risus, porta ac consectetur ac,
-        vestibulum at eros. Praesent commodo cursus magna.</p>
+        <h3><span className="num">1</span>
+        Simply click to order your mining tools, called a Rig</h3>
       </div>
-      <div className="col-xs-12 col-sm-4 text-center">
-        <br />
-        <img className="img-circle" src="http://placehold.it/800x500"
-          alt="Generic placeholder" width="140" height="140" />
-        <h2>Donec sed odio dui</h2>
+    </div>
+
+    <div className="row">
+      <div className="col-xs-12">
+        <h3><span className="num">2</span>
+        Pick the Coin(s) you want to mine</h3>
+      </div>
+    </div>
+
+    <div className="row">
+      <div className="col-xs-12">
+        <h3><span className="num">3</span>
+        Check your Digital Wallet for accumulate coins</h3>
+      </div>
+    </div>
+
+    <div className="row">
+      <div className="col-xs-12">
+        <p>Rigs are tied type of coins you want to mine</p>
+        <p>Purchase as many Rigs, and Rig types you want, the more
+         Rigs, the more mining ability</p>
+        <p>Coin accumulation depends on your Rig and Coin type
+         selections, and the coin’s network demand</p>
       </div>
     </div>
   </div>

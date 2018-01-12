@@ -9,6 +9,13 @@ import {
 } from 'react-redux-firebase'
 
 class Login extends Component {
+  componentDidUpdate() {
+    const { auth, history } = this.props
+    if (auth) {
+      history.push('/')
+    }
+  }
+
   googleLogin = loginData => {
     return this.props.firebase
       .login({ provider: 'google' })

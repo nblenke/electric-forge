@@ -1,21 +1,26 @@
-Electric Forge
 
-Staging: https://elefor-4ca7d.firebaseapp.com
-Console: https://console.firebase.google.com/project/elefor-4ca7d/overview
+# Electric Forge
 
-- Boostrapped with https://github.com/facebookincubator/create-react-app
-- Firebase
-- react-redux-firebase https://github.com/prescottprue/react-redux-firebase
+Staging
+https://elefor-4ca7d.firebaseapp.com
 
-*Setup
-- npm i
-- npm i -g firebase-tools
-- firebase init
+Console
+https://console.firebase.google.com/project/elefor-4ca7d/overview
 
-* Dev
-- npm start
+## Setup
+```
+npm i
+npm i -g firebase-tools
+firebase init
+```
 
-*Staging Deployment
+## Dev
+```
+npm start
+```
 
-- npm run build
-- firebase deploy
+## Staging Deployment
+```
+npm run build
+firebase deploy
+```

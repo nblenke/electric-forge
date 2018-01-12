@@ -1,11 +1,23 @@
 @import 'https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css';
-
+@import 'https://fonts.googleapis.com/css?family=Lato:300,400,700';
+@import 'https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css';
 $green: green;
 
 body {
-	font-family: sans-serif;
+	font-family: "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.45;
+  color: #2b3e50;
 }
 
 @mixin foo {
 	color: $green;
+}
+
+.navbar {
+  border-radius: 0;
+}
+
+img {
+	max-width: 100%;
 }
