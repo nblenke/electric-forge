@@ -6,6 +6,7 @@ import {
   firebaseConnect,
   pathToJS
 } from 'react-redux-firebase'
+import AddProduct from '../../components/AddProduct'
 import ProductList from '../../components/ProductList'
 
 class Account extends Component {
@@ -28,12 +29,11 @@ class Account extends Component {
             <div>Welcome {auth.displayName}({auth.email})</div>
 
             <h3>Add Rig</h3>
-            <input type='text' ref={ref => { this.input = ref }} />
-            <button onClick={this.handleAdd}>Add</button>
+            <AddProduct />
 
             <h3>My Rigs</h3>
             <div className="row text-center">
-              <ProductList hasDelete={true} products={products} />
+              <ProductList hasDelete={true} products={products} restrict={true} />
             </div>
 
             <h3>Stats</h3>
