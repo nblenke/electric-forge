@@ -10,14 +10,6 @@ import AddProduct from '../../components/AddProduct'
 import ProductList from '../../components/ProductList'
 
 class Account extends Component {
-  handleAdd = () => {
-    const { firebase } = this.props
-    firebase.push('/products', {
-      text: this.input.value,
-      done: false
-    })
-  }
-
   render () {
     const { auth, products } = this.props
 
@@ -33,7 +25,14 @@ class Account extends Component {
 
             <h3>My Rigs</h3>
             <div className="row text-center">
-              <ProductList hasDelete={true} products={products} restrict={true} />
+              <ProductList
+                hasDelete={true}
+                hasActiveToggle={true}
+                products={products}
+                showOnlyUser={true}
+                showInactive={true}
+                uid={auth.uid}
+              />
             </div>
 
             <h3>Stats</h3>

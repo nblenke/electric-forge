@@ -6,29 +6,88 @@ import {
   firebaseConnect,
   pathToJS
 } from 'react-redux-firebase'
-//import { Link } from 'react-router-dom'
+import './styles.scss'
+
+let that
 
 class AddProduct extends Component {
+  constructor(props) {
+    super(props)
+    that = this
+    this.state = {
+      showSuccess: false
+    }
+  }
   handleAdd = () => {
-    const { auth, firebase } = this.props
+    const { firebase } = this.props
 
-    firebase.push('/products', {
+    firebase.pushWithMeta('/products', {
       title: this.title.value,
       description: this.description.value,
-      uid: auth.uid,
-      done: false
-    })
+      active: false
+    }).then(function() {
+      that.setState({
+        showSuccess: true
+      })
+      setTimeout(function() {
+        that.setState({
+          showSuccess: false
+        })
+      }, 1000)
+    });
   }
 
   render () {
-    const { auth, products } = this.props
+    const { showSuccess } = this.state
 
     return (
-      <div>
-        Title: <input type='text' ref={ref => { this.title = ref }} /><br />
-        Description: <input type='text' ref={ref => { this.description = ref }} />
-        <button onClick={this.handleAdd}>Add</button>
-    	</div>
+      <div className="row add-product">
+        <div className="col-xs-12 col-sm-6">
+
+          <div className="panel panel-default">
+            <div className="panel-heading">Add Rig</div>
+            <div className="panel-body">
+
+              <div className="form-group">
+                <label>Title</label>
+                <input
+                  type='text'
+                  className="form-control"
+                  placeholder="Title"
+                  ref={ref => { this.title = ref }} />
+              </div>
+
+              <div className="form-group">
+                <label>Description</label>
+                <input
+                  type='text'
+                  className="form-control"
+                  placeholder="description"
+                  ref={ref => { this.description = ref }} />
+              </div>
+
+              <div className="form-group">
+                <button
+                  className="btn btn-primary"
+                  onClick={this.handleAdd}
+                  disabled={showSuccess ? true : false}>Add
+                </button>
+              </div>
+
+              <div className="row">
+                <div className="col-xs-12">
+                  {showSuccess
+                    ? <div className="panel panel-success">
+                        <div className="panel-heading">Rig Added Successfully</div>
+                      </div>
+                    : null }
+                </div>
+              </div>
+
+            </div>
+        	</div>
+        </div>
+      </div>
     )
   }
 }

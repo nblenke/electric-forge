@@ -8,7 +8,7 @@ import {
   dataToJS,
   pathToJS,
 } from 'react-redux-firebase'
-import ProductList from '../../components/ProductList'
+import ProductSwiper from '../../components/ProductSwiper'
 
 class Home extends Component {
   render () {
@@ -16,27 +16,31 @@ class Home extends Component {
     return (
       <div className="container">
         <section className="jumbotron hero-spacer">
-          <h1>Start Mining Today!</h1>
-          <h2>Electric Forge provides 100% of the resources and tools
-           you need to mine CryptoCoins, including BitCoin and Ethereum</h2>
+          <h2>Start Mining Today!</h2>
+          <h3>Electric Forge provides 100% of the resources and tools
+           you need to mine CryptoCoins, including BitCoin and Ethereum</h3>
         </section>
 
         <div className="row">
-          <div className="col-lg-12">
+          <div className="col-xs-12">
             <h3>Operational Rigs</h3>
           </div>
         </div>
-        <div className="row text-center">
-          <ProductList products={products} />
+        <div className="row">
+          <div className="col-xs-12">
+            <ProductSwiper products={products} />
+          </div>
         </div>
 
         <div className="row">
-          <div className="col-lg-12">
+          <div className="col-xs-12">
             <h3>Available Rigs</h3>
           </div>
         </div>
-        <div className="row text-center">
-          <ProductList products={products} />
+        <div className="row">
+          <div className="col-xs-12">
+            <ProductSwiper products={products} />
+          </div>
         </div>
       </div>
     )
