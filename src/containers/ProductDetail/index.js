@@ -5,20 +5,24 @@ import {
   firebaseConnect,
   dataToJS,
 } from 'react-redux-firebase'
-import ProductList from '../../components/ProductList'
 
 class Rigs extends Component {
   render () {
-    const { products } = this.props
+    const { match, products } = this.props
+
+    if (!products) {
+      return false
+    }
+
+    const product = products[match.params.id]
+
     return (
       <div className="container">
         <div className="row">
           <div className="col-xs-12">
-            <h3>Rigs</h3>
+            <h3>{product.title}</h3>
+            <p>{product.description}</p>
           </div>
-        </div>
-        <div className="row text-center">
-          <ProductList products={products} />
         </div>
       </div>
     )

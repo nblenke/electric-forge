@@ -5,19 +5,20 @@ import { isEmpty } from 'react-redux-firebase'
 export default ({
     products,
     hasDelete,
+    hasEdit,
     showOnlyUser,
     uid
   }) => (
   <div className="product-list">
     {!isEmpty(products) ?
       Object.keys(products).map((key) => (
-        <div>
-          {showOnlyUser && uid !== products[key].uid
+        <div key={key}>
+          {showOnlyUser && uid !== products[key].createdBy
             ? null
             : <div className="col-xs-6 col-sm-4 col-md-3">
                 <ProductItem
-                  key={key}
                   hasDelete={hasDelete}
+                  hasEdit={hasEdit}
                   id={key}
                   product={products[key]}
                 />

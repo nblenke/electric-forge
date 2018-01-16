@@ -10,7 +10,8 @@ import Footer from '../../components/Footer/'
 import Home from '../Home/'
 import Header from '../../components/Header/'
 import Login from '../Login/'
-import Rigs from '../Rigs/'
+import ProductDetail from '../ProductDetail/'
+import ProductList from '../ProductList/'
 import configureStore from '../../store'
 import './styles.css'
 
@@ -27,7 +28,8 @@ export default () => (
           <Route exact path="/about" component={About} />
           <Route exact path="/account" component={Account} />
           <Route exact path="/login" component={Login} />
-          <Route exact path="/rigs" component={Rigs} />
+          <Route exact path="/rig/:id" component={ProductDetail} />
+          <Route exact path="/rigs" component={ProductList} />
         </div>
         <Footer />
       </div>

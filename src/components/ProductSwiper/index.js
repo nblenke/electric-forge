@@ -32,12 +32,11 @@ export default class ProductSwiper extends Component {
         centeredSlides={true}
         onInit={this.handleInit}>
           {Object.keys(products).map((key) => (
-            <div>
+            <div key={key}>
               {showOnlyUser && uid !== products[key].uid
                 ? null
                 : <div>
                     <ProductItem
-                      key={key}
                       id={key}
                       product={products[key]}
                     />

@@ -1,21 +1,43 @@
 import React, { Component } from 'react'
-// import PropTypes from 'prop-types'
+import EditProduct from '../EditProduct'
 import { firebase } from 'react-redux-firebase'
+import { Button, Modal } from 'react-bootstrap'
+import { Link } from 'react-router-dom'
 import './styles.css'
 
 class ProductItem extends Component {
+  constructor(...args) {
+    super(...args);
+
+    this.handleShow = this.handleShow.bind(this)
+    this.handleClose = this.handleClose.bind(this)
+    this.handleDelete = this.handleDelete.bind(this)
+
+    this.state = { showEditModal: false };
+  }
+
+  handleClose() {
+    this.setState({ showEditModal: false });
+  }
+
+  handleShow() {
+    this.setState({ showEditModal: true });
+  }
+
+  handleDelete() {
+    const { firebase, id } = this.props
+    firebase.remove(`/products/${id}`)
+  }
+
+
   render() {
     const {
       className,
-      firebase,
       hasDelete,
+      hasEdit,
       id,
       product,
     } = this.props
-
-    const deleteProduct = (event) => {
-       firebase.remove(`/products/${id}`)
-    }
 
     return (
       <div className={`product-item ${className ? className : ''}`}>
@@ -26,14 +48,32 @@ class ProductItem extends Component {
 
           <div className="row">
             {hasDelete ?
-                <button className="btn btn-primary" onClick={deleteProduct}>
+                <button className="btn btn-default" onClick={this.handleDelete}>
                   Delete
                 </button>
             : null}
 
-            <a href="" className="btn btn-default">Details</a>
+            {hasEdit ?
+                <button className="btn btn-default" onClick={this.handleShow}>
+                  Edit
+                </button>
+            : null}
+
+            <Link to={`/rig/${id}`} className="btn btn-default">Details</Link>
           </div>
         </div>
+
+        <Modal show={this.state.showEditModal} onHide={this.handleClose}>
+          <Modal.Header closeButton>
+            <Modal.Title>Edit Rig</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <EditProduct product={product} id={id} />
+          </Modal.Body>
+          <Modal.Footer>
+            <Button onClick={this.handleClose}>Close</Button>
+          </Modal.Footer>
+        </Modal>
       </div>
     )
   }

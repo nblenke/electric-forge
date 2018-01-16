@@ -7,7 +7,7 @@ import {
   pathToJS
 } from 'react-redux-firebase'
 import AddProduct from '../../components/AddProduct'
-import ProductList from '../../components/ProductList'
+import ProductGrid from '../../components/ProductGrid'
 
 class Account extends Component {
   render () {
@@ -20,13 +20,13 @@ class Account extends Component {
             <h2>My Account</h2>
             <div>Welcome {auth.displayName}({auth.email})</div>
 
-            <h3>Add Rig</h3>
             <AddProduct />
 
             <h3>My Rigs</h3>
             <div className="row text-center">
-              <ProductList
+              <ProductGrid
                 hasDelete={true}
+                hasEdit={true}
                 hasActiveToggle={true}
                 products={products}
                 showOnlyUser={true}
@@ -34,8 +34,6 @@ class Account extends Component {
                 uid={auth.uid}
               />
             </div>
-
-            <h3>Stats</h3>
 
           </div>
         ) : null}

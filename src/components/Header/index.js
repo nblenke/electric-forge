@@ -42,7 +42,7 @@ class Header extends Component {
 
           {auth && auth.displayName ? (
             <ul className="nav navbar-nav navbar-right">
-              <li><Link to="/account">My Wallet</Link></li>
+              <li><Link to="/account">Account</Link></li>
               <li><a onClick={this.handleSignOut}>Sign Out</a></li>
             </ul>
           ) : (
