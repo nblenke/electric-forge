@@ -8,8 +8,25 @@ import {
 } from 'react-redux-firebase'
 import AddProduct from '../../components/AddProduct'
 import ProductGrid from '../../components/ProductGrid'
+import { Button, Modal } from 'react-bootstrap'
 
 class Account extends Component {
+  constructor(...args) {
+    super(...args);
+
+    this.handleShow = this.handleShow.bind(this)
+    this.handleClose = this.handleClose.bind(this)
+
+    this.state = { showAddModal: false };
+  }
+
+  handleClose() {
+    this.setState({ showAddModal: false });
+  }
+
+  handleShow() {
+    this.setState({ showAddModal: true });
+  }
   render () {
     const { auth, products } = this.props
 
@@ -18,9 +35,9 @@ class Account extends Component {
         {auth && auth.displayName ? (
           <div>
             <h2>My Account</h2>
-            <div>Welcome {auth.displayName}({auth.email})</div>
+            <p>Welcome {auth.displayName}({auth.email})</p>
 
-            <AddProduct />
+            <Button onClick={this.handleShow}>Add Rig</Button>
 
             <h3>My Rigs</h3>
             <div className="row text-center">
@@ -34,6 +51,18 @@ class Account extends Component {
                 uid={auth.uid}
               />
             </div>
+
+            <Modal show={this.state.showAddModal} onHide={this.handleClose}>
+              <Modal.Header closeButton>
+                <Modal.Title>Add Rig</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                <AddProduct />
+              </Modal.Body>
+              <Modal.Footer>
+                <Button onClick={this.handleClose}>Close</Button>
+              </Modal.Footer>
+            </Modal>
 
           </div>
         ) : null}

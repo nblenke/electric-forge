@@ -18,7 +18,7 @@ class Header extends Component {
   handleSignOut(ev) {
     ev.preventDefault()
     this.props.firebase.auth().signOut()
-    window.location.reload()
+    window.location = '/'
   }
 
   render () {

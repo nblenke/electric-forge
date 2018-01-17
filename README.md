@@ -12,6 +12,7 @@ https://console.firebase.google.com/project/elefor-4ca7d/overview
 npm i
 npm i -g firebase-tools
 firebase init
+firebase functions:config:set gmail.email="electric.forge.dev@gmail.com" gmail.password=""
 ```
 
 ## Dev

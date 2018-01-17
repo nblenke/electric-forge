@@ -6,29 +6,27 @@ import { Link } from 'react-router-dom'
 import './styles.css'
 
 class ProductItem extends Component {
-  constructor(...args) {
-    super(...args);
-
+  constructor(props) {
+    super(props)
     this.handleShow = this.handleShow.bind(this)
     this.handleClose = this.handleClose.bind(this)
     this.handleDelete = this.handleDelete.bind(this)
 
-    this.state = { showEditModal: false };
+    this.state = { showEditModal: false }
   }
 
   handleClose() {
-    this.setState({ showEditModal: false });
+    this.setState({ showEditModal: false })
   }
 
   handleShow() {
-    this.setState({ showEditModal: true });
+    this.setState({ showEditModal: true })
   }
 
   handleDelete() {
     const { firebase, id } = this.props
     firebase.remove(`/products/${id}`)
   }
-
 
   render() {
     const {
@@ -39,27 +37,32 @@ class ProductItem extends Component {
       product,
     } = this.props
 
+    if (product.purchased) {
+      return false
+    }
+
     return (
       <div className={`product-item ${className ? className : ''}`}>
-        <img src="http://placehold.it/300x300" alt="" />
+        <Link to={`/rig/${id}`}>
+          <img src="http://placehold.it/300x300" alt="" />
+        </Link>
         <div className="caption">
-          <h3>{product.title}</h3>
+          <h3><Link to={`/rig/${id}`}>{product.title}</Link></h3>
           <p>{product.description}</p>
+          <p>{product.price}</p>
 
           <div className="row">
             {hasDelete ?
-                <button className="btn btn-default" onClick={this.handleDelete}>
-                  Delete
-                </button>
+              <button className="btn btn-default" onClick={this.handleDelete}>
+                Delete
+              </button>
             : null}
 
             {hasEdit ?
-                <button className="btn btn-default" onClick={this.handleShow}>
-                  Edit
-                </button>
+              <button className="btn btn-default" onClick={this.handleShow}>
+                Edit
+              </button>
             : null}
-
-            <Link to={`/rig/${id}`} className="btn btn-default">Details</Link>
           </div>
         </div>
 

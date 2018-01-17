@@ -10,8 +10,10 @@ import Footer from '../../components/Footer/'
 import Home from '../Home/'
 import Header from '../../components/Header/'
 import Login from '../Login/'
+import Privacy from '../Privacy/'
 import ProductDetail from '../ProductDetail/'
 import ProductList from '../ProductList/'
+import Terms from '../Terms/'
 import configureStore from '../../store'
 import './styles.css'
 
@@ -30,6 +32,8 @@ export default () => (
           <Route exact path="/login" component={Login} />
           <Route exact path="/rig/:id" component={ProductDetail} />
           <Route exact path="/rigs" component={ProductList} />
+          <Route exact path="/terms" component={Terms} />
+          <Route exact path="/privacy" component={Privacy} />
         </div>
         <Footer />
       </div>

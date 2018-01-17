@@ -24,7 +24,9 @@ class AddProduct extends Component {
     firebase.pushWithMeta('/products', {
       title: this.title.value,
       description: this.description.value,
-      active: false
+      ethermineId: this.ethermineId.value,
+      price: this.price.value,
+      purchased: false,
     }).then(function() {
       that.setState({
         showSuccess: true
@@ -44,48 +46,56 @@ class AddProduct extends Component {
       <div className="row add-product">
         <div className="col-xs-12 col-sm-6">
 
-          <div className="panel panel-default">
-            <div className="panel-heading">Add Rig</div>
-            <div className="panel-body">
+          <div className="form-group">
+            <label>Title</label>
+            <input
+              type='text'
+              className="form-control"
+              ref={ref => { this.title = ref }} />
+          </div>
 
-              <div className="form-group">
-                <label>Title</label>
-                <input
-                  type='text'
-                  className="form-control"
-                  placeholder="Title"
-                  ref={ref => { this.title = ref }} />
-              </div>
+          <div className="form-group">
+            <label>Description</label>
+            <input
+              type='text'
+              className="form-control"
+              ref={ref => { this.description = ref }} />
+          </div>
 
-              <div className="form-group">
-                <label>Description</label>
-                <input
-                  type='text'
-                  className="form-control"
-                  placeholder="description"
-                  ref={ref => { this.description = ref }} />
-              </div>
+          <div className="form-group">
+            <label>Price</label>
+            <input
+              type='text'
+              className="form-control"
+              ref={ref => { this.price = ref }} />
+          </div>
 
-              <div className="form-group">
-                <button
-                  className="btn btn-primary"
-                  onClick={this.handleAdd}
-                  disabled={showSuccess ? true : false}>Add
-                </button>
-              </div>
+          <div className="form-group">
+            <label>Ethermine ID</label>
+            <input
+              type='text'
+              className="form-control"
+              ref={ref => { this.ethermineId = ref }} />
+          </div>
 
-              <div className="row">
-                <div className="col-xs-12">
-                  {showSuccess
-                    ? <div className="panel panel-success">
-                        <div className="panel-heading">Rig Added Successfully</div>
-                      </div>
-                    : null }
-                </div>
-              </div>
+          <div className="form-group">
+            <button
+              className="btn btn-primary"
+              onClick={this.handleAdd}
+              disabled={showSuccess ? true : false}>Add
+            </button>
+          </div>
 
+          <div className="row">
+            <div className="col-xs-12">
+              {showSuccess
+                ? <div className="panel panel-success">
+                    <div className="panel-heading">Rig Added Successfully</div>
+                  </div>
+                : null }
             </div>
-        	</div>
+          </div>
+
         </div>
       </div>
     )

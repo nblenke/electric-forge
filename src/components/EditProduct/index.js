@@ -37,7 +37,6 @@ class EditProduct extends Component {
             defaultValue={product.title}
             ref={ref => { this.title = ref }} />
         </div>
-
         <div className="form-group">
           <label>Description</label>
           <input
@@ -46,6 +45,23 @@ class EditProduct extends Component {
             defaultValue={product.description}
             ref={ref => { this.description = ref }} />
         </div>
+        <div className="form-group">
+          <label>Ethermine ID</label>
+          <input
+            type='text'
+            className="form-control"
+            defaultValue={product.ethermineId}
+            ref={ref => { this.ethermineId = ref }} />
+        </div>
+        <div className="form-group">
+          <label>price</label>
+          <input
+            type='text'
+            className="form-control"
+            defaultValue={product.price}
+            ref={ref => { this.price = ref }} />
+        </div>
+
 
         <div className="form-group">
           <button className="btn btn-primary" onClick={this.handleAdd}>Save</button>
