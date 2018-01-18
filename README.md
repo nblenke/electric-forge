@@ -2,10 +2,10 @@
 # Electric Forge
 
 Staging
-https://elefor-4ca7d.firebaseapp.com
+https://electric-forge-dev.firebaseapp.com/
 
 Console
-https://console.firebase.google.com/project/elefor-4ca7d/overview
+https://console.firebase.google.com/project/electric-forge-dev/overview
 
 ## Setup
 ```
