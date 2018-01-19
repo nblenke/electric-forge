@@ -15,6 +15,17 @@ class ProductItem extends Component {
     this.state = { showEditModal: false }
   }
 
+  // componentDidMount() {
+  //   const { auth, firebase, products } = this.props
+  //   const storageRef = firebase.storage().ref()
+  //   const ref = storageRef.child('uploadedImages/available.gif')
+  //
+  //   ref.getDownloadURL().then(function(url) {
+  //     // document.querySelector('img').src = url;
+  //     console.log(url)
+  //   })
+  // }
+
   handleClose() {
     this.setState({ showEditModal: false })
   }

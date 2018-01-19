@@ -7,6 +7,7 @@ import {
 } from 'react-redux-firebase'
 import { Button, Modal } from 'react-bootstrap'
 import Purchase from '../../components/Purchase'
+import './styles.css'
 
 class Rigs extends Component {
   constructor(props) {
@@ -39,14 +40,15 @@ class Rigs extends Component {
           <div className="col-xs-12">
             <h3>{product.title}</h3>
             <p>{product.description}</p>
-            <p>Currently Mining</p>
+            <p>{product.price}</p>
+            <p>Currently Mining:</p>
             <p>Ethermine Id:</p>
             <p>Began Mining:</p>
-            <p>Kwh</p>
+            <p>Kwh:</p>
             <p>Current Monthly Output:</p>
             <p>24 hour Hashrate:</p>
             <p>Number Of Active Workers:</p>
-            <Button onClick={this.handleShow}>Purchase Rig</Button>
+            <button className="btn btn-primary btn-lg" onClick={this.handleShow}>Purchase Rig</button>
           </div>
         </div>
 

@@ -9,6 +9,7 @@ import {
 import AddProduct from '../../components/AddProduct'
 import ProductGrid from '../../components/ProductGrid'
 import { Button, Modal } from 'react-bootstrap'
+import Upload from '../../components/Upload'
 
 class Account extends Component {
   constructor(...args) {
@@ -38,6 +39,9 @@ class Account extends Component {
             <p>Welcome {auth.displayName}({auth.email})</p>
 
             <Button onClick={this.handleShow}>Add Rig</Button>
+
+            <h3>Upload Images</h3>
+            <Upload />
 
             <h3>My Rigs</h3>
             <div className="row text-center">
@@ -80,7 +84,7 @@ export default compose(
       authError: pathToJS(firebase, 'authError'),
       auth: pathToJS(firebase, 'auth'),
       products: dataToJS(firebase, 'products'),
-      profile: pathToJS(firebase, 'profile')
+      profile: pathToJS(firebase, 'profile'),
     })
   )
 )(Account)

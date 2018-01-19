@@ -9,6 +9,7 @@ import {
   pathToJS,
 } from 'react-redux-firebase'
 import ProductSwiper from '../../components/ProductSwiper'
+import './styles.css'
 
 class Home extends Component {
   render () {
