@@ -12,19 +12,10 @@ class ProductItem extends Component {
     this.handleClose = this.handleClose.bind(this)
     this.handleDelete = this.handleDelete.bind(this)
 
-    this.state = { showEditModal: false }
+    this.state = {
+      showEditModal: false,
+    }
   }
-
-  // componentDidMount() {
-  //   const { auth, firebase, products } = this.props
-  //   const storageRef = firebase.storage().ref()
-  //   const ref = storageRef.child('uploadedImages/available.gif')
-  //
-  //   ref.getDownloadURL().then(function(url) {
-  //     // document.querySelector('img').src = url;
-  //     console.log(url)
-  //   })
-  // }
 
   handleClose() {
     this.setState({ showEditModal: false })
@@ -48,19 +39,23 @@ class ProductItem extends Component {
       product,
     } = this.props
 
-    if (product.purchased) {
+    const { description, imgPath, price, purchased, title } = product
+
+    if (purchased) {
       return false
     }
 
     return (
       <div className={`product-item ${className ? className : ''}`}>
         <Link to={`/rig/${id}`}>
-          <img src="http://placehold.it/300x300" alt="" />
+          {imgPath ? (
+            <img src={imgPath} alt={title} />
+          ) : <div className="product-item__no-image"></div> }
         </Link>
         <div className="caption">
-          <h3><Link to={`/rig/${id}`}>{product.title}</Link></h3>
-          <p>{product.description}</p>
-          <p>{product.price}</p>
+          <h3><Link to={`/rig/${id}`}>{title}</Link></h3>
+          <p>{description}</p>
+          <p>{price}</p>
 
           <div className="row">
             {hasDelete ?

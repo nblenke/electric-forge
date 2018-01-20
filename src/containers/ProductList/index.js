@@ -1,10 +1,7 @@
 import React, { Component } from 'react'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
-import {
-  firebaseConnect,
-  dataToJS,
-} from 'react-redux-firebase'
+import { firebaseConnect } from 'react-redux-firebase'
 import ProductGrid from '../../components/ProductGrid'
 
 class ProductList extends Component {
@@ -27,11 +24,11 @@ class ProductList extends Component {
 
 export default compose(
   firebaseConnect([
-    '/products',
+    'products',
   ]),
   connect(
-    ({ firebase }) => ({
-      products: dataToJS(firebase, 'products'),
+    ({ firebase: { data: { products }} }) => ({
+      products
     })
   )
 )(ProductList)

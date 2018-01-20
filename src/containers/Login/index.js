@@ -2,17 +2,14 @@ import React, { Component } from 'react'
 import GoogleButton from 'react-google-button'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
-// import { push } from 'react-router-redux'
-import {
-  firebaseConnect,
-  pathToJS
-} from 'react-redux-firebase'
+import { firebaseConnect } from 'react-redux-firebase'
 
 class Login extends Component {
   componentDidUpdate() {
     const { auth, history } = this.props
+
     if (auth) {
-      history.push('/')
+      history.push('/admin')
     }
   }
 
@@ -28,9 +25,11 @@ class Login extends Component {
   render () {
     const { auth } = this.props
 
+    console.log(auth)
+
     return (
       <div>
-        {!auth ?
+        {auth.isEmpty ?
           <div>
             Sign In
               <GoogleButton onClick={this.googleLogin} />
@@ -44,10 +43,10 @@ class Login extends Component {
 export default compose(
   firebaseConnect(),
   connect(
-    ({ firebase }) => ({
-      authError: pathToJS(firebase, 'authError'),
-      auth: pathToJS(firebase, 'auth'),
-      profile: pathToJS(firebase, 'profile')
+    ({ firebase: { auth, authError, profile } }) => ({
+      auth,
+      authError,
+      profile
     })
   )
 )(Login)

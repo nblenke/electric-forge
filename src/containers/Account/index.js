@@ -1,33 +1,29 @@
 import React, { Component } from 'react'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
-import {
-  dataToJS,
-  firebaseConnect,
-  pathToJS
-} from 'react-redux-firebase'
+import { firebaseConnect } from 'react-redux-firebase'
 import AddProduct from '../../components/AddProduct'
 import ProductGrid from '../../components/ProductGrid'
 import { Button, Modal } from 'react-bootstrap'
-import Upload from '../../components/Upload'
 
 class Account extends Component {
-  constructor(...args) {
-    super(...args);
+  constructor(props) {
+    super(props)
 
     this.handleShow = this.handleShow.bind(this)
     this.handleClose = this.handleClose.bind(this)
 
-    this.state = { showAddModal: false };
+    this.state = { showAddModal: false }
   }
 
   handleClose() {
-    this.setState({ showAddModal: false });
+    this.setState({ showAddModal: false })
   }
 
   handleShow() {
-    this.setState({ showAddModal: true });
+    this.setState({ showAddModal: true })
   }
+
   render () {
     const { auth, products } = this.props
 
@@ -35,15 +31,11 @@ class Account extends Component {
       <div>
         {auth && auth.displayName ? (
           <div>
-            <h2>My Account</h2>
-            <p>Welcome {auth.displayName}({auth.email})</p>
+            <h2>Admin</h2>
 
             <Button onClick={this.handleShow}>Add Rig</Button>
 
-            <h3>Upload Images</h3>
-            <Upload />
-
-            <h3>My Rigs</h3>
+            <h3>Rigs</h3>
             <div className="row text-center">
               <ProductGrid
                 hasDelete={true}
@@ -77,14 +69,14 @@ class Account extends Component {
 
 export default compose(
   firebaseConnect([
-    '/products',
+    'products',
   ]),
   connect(
-    ({ firebase }) => ({
-      authError: pathToJS(firebase, 'authError'),
-      auth: pathToJS(firebase, 'auth'),
-      products: dataToJS(firebase, 'products'),
-      profile: pathToJS(firebase, 'profile'),
+    ({ firebase: { auth, authError, profile, data: { products }} }) => ({
+      auth,
+      authError,
+      products,
+      profile,
     })
   )
 )(Account)

@@ -1,13 +1,7 @@
 import React, { Component } from 'react'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
-import {
-  firebaseConnect,
-  // isLoaded,
-  // isEmpty,
-  dataToJS,
-  pathToJS,
-} from 'react-redux-firebase'
+import { firebaseConnect } from 'react-redux-firebase'
 import ProductSwiper from '../../components/ProductSwiper'
 import './styles.css'
 
@@ -50,17 +44,12 @@ class Home extends Component {
 
 export default compose(
   firebaseConnect([
-    '/products',
-    // { type: 'once', path: '/products' } // for loading once instead of binding
-    // '/products#populate=owner:displayNames' // for populating owner parameter from id into string loaded from /displayNames root
-    // '/products#populate=collaborators:users' // for populating owner parameter from id to user object loaded from /users root
-    // { path: 'products', populates: [{ child: 'collaborators', root: 'users' }] } // object notation of population
-    // '/products#populate=owner:users:displayName' // for populating owner parameter from id within to displayName string from user object within users root
+    'products',
   ]),
   connect(
-    ({ firebase }) => ({
-      auth: pathToJS(firebase, 'auth'),
-      products: dataToJS(firebase, 'products'),
+    ({ firebase: { auth, data: { products }} }) => ({
+      auth,
+      products,
     })
   )
 )(Home)

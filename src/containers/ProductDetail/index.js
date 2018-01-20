@@ -1,15 +1,12 @@
 import React, { Component } from 'react'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
-import {
-  firebaseConnect,
-  dataToJS,
-} from 'react-redux-firebase'
+import { firebaseConnect } from 'react-redux-firebase'
 import { Button, Modal } from 'react-bootstrap'
 import Purchase from '../../components/Purchase'
 import './styles.css'
 
-class Rigs extends Component {
+class ProductDetail extends Component {
   constructor(props) {
     super(props)
     this.handleShow = this.handleShow.bind(this)
@@ -33,14 +30,21 @@ class Rigs extends Component {
     }
 
     const product = products[match.params.id]
+    const { description, imgPath, price, title } = product
 
     return (
       <div className="container">
         <div className="row">
-          <div className="col-xs-12">
-            <h3>{product.title}</h3>
-            <p>{product.description}</p>
-            <p>{product.price}</p>
+          <div className="col-xs-12 col-sm-5">
+            {imgPath ? (
+              <img src={imgPath} alt={title} />
+            ) : <div className="product-item__no-image"></div> }
+          </div>
+
+          <div className="col-xs-12 col-sm-7">
+            <h3>{title}</h3>
+            <p>{description}</p>
+            <p>{price}</p>
             <p>Currently Mining:</p>
             <p>Ethermine Id:</p>
             <p>Began Mining:</p>
@@ -70,11 +74,11 @@ class Rigs extends Component {
 
 export default compose(
   firebaseConnect([
-    '/products',
+    'products',
   ]),
   connect(
-    ({ firebase }) => ({
-      products: dataToJS(firebase, 'products'),
+    ({ firebase: { data: { products }} }) => ({
+      products
     })
   )
-)(Rigs)
+)(ProductDetail)

@@ -1,10 +1,7 @@
 import React, { Component } from 'react'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
-import {
-  dataToJS,
-  firebaseConnect,
-} from 'react-redux-firebase'
+import { firebaseConnect } from 'react-redux-firebase'
 
 class EditProduct extends Component {
   handleAdd = () => {
@@ -73,11 +70,11 @@ class EditProduct extends Component {
 
 export default compose(
   firebaseConnect([
-    '/products',
+    'products',
   ]),
   connect(
-    ({ firebase }) => ({
-      products: dataToJS(firebase, 'products'),
+    ({ firebase: { data: { products }} }) => ({
+      products,
     })
   )
 )(EditProduct)

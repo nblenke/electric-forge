@@ -6,7 +6,9 @@ export default () => (
   <footer>
     <div className="container">
       <div className="row">
-        <Link to="/privacy">Privacy</Link> | <Link to="/terms">Terms</Link>
+        <div className="col-xs-12">
+          <Link to="/privacy">Privacy</Link> | <Link to="/terms">Terms</Link>
+        </div>
       </div>
     </div>
   </footer>

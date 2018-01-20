@@ -1,12 +1,9 @@
 import React, { Component } from 'react'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
-import {
-  firebaseConnect,
-  pathToJS
-} from 'react-redux-firebase'
+import { firebaseConnect } from 'react-redux-firebase'
 import { Link } from 'react-router-dom'
-import { Navbar } from 'react-bootstrap'
+import { Navbar, Nav, NavItem } from 'react-bootstrap'
 import './styles.css'
 
 class Header extends Component {
@@ -22,8 +19,6 @@ class Header extends Component {
   }
 
   render () {
-    const { auth } = this.props
-
     return (
       <Navbar inverse collapseOnSelect>
     		<Navbar.Header>
@@ -35,21 +30,10 @@ class Header extends Component {
     			<Navbar.Toggle />
     		</Navbar.Header>
     		<Navbar.Collapse>
-          <ul className="nav navbar-nav">
-  			    <li><Link to="/about">How it works</Link></li>
-            <li><Link to="/rigs">Rigs</Link></li>
-          </ul>
-
-          {auth && auth.displayName ? (
-            <ul className="nav navbar-nav navbar-right">
-              <li><Link to="/account">Account</Link></li>
-              <li><a onClick={this.handleSignOut}>Sign Out</a></li>
-            </ul>
-          ) : (
-            <ul className="nav navbar-nav navbar-right">
-              <li><Link to="/login">Sign In</Link></li>
-            </ul>
-          )}
+          <Nav>
+      			<NavItem eventKey={1} href="/about">How it works</NavItem>
+            <NavItem eventKey={2} href="/rigs">Rigs</NavItem>
+          </Nav>
     		</Navbar.Collapse>
     	</Navbar>
     )
@@ -59,10 +43,10 @@ class Header extends Component {
 export default compose(
   firebaseConnect(),
   connect(
-    ({ firebase }) => ({
-      authError: pathToJS(firebase, 'authError'),
-      auth: pathToJS(firebase, 'auth'),
-      profile: pathToJS(firebase, 'profile')
+    ({ firebase: { auth, authError, profile } }) => ({
+      auth,
+      authError,
+      profile,
     })
   )
 )(Header)

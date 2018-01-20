@@ -1,10 +1,7 @@
 import React, { Component } from 'react'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
-import {
-  dataToJS,
-  firebaseConnect,
-} from 'react-redux-firebase'
+import { firebaseConnect } from 'react-redux-firebase'
 import { Field, reduxForm } from 'redux-form'
 import { Link } from 'react-router-dom'
 import Input from '../Input'
@@ -147,13 +144,17 @@ class Purchase extends Component {
 
 export default compose(
   firebaseConnect([
-    '/orders',
-    '/products',
+    'orders',
+    'products',
   ]),
   connect(
-    ({ firebase }) => ({
-      forms: firebase.form,
-      products: dataToJS(firebase, 'products'),
+    ({
+      firebase: { auth, authError, forms, profile, data: { orders, products }} }) => ({
+      auth,
+      authError,
+      forms,
+      products,
+      profile,
     })
   ),
   reduxForm({
