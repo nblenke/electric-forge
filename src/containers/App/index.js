@@ -5,7 +5,7 @@ import {
 } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import About from '../About/'
-import Account from '../Account/'
+import Admin from '../Admin/'
 import Footer from '../../components/Footer/'
 import Home from '../Home/'
 import Header from '../../components/Header/'
@@ -30,7 +30,7 @@ export default () => (
         <div className="container">
           <Route exact path="/" component={Home} />
           <Route exact path="/about" component={About} />
-          <Route exact path="/admin" component={Account} />
+          <Route exact path="/admin" component={Admin} />
           <Route exact path="/login" component={Login} />
           <Route exact path="/rig/:id" component={ProductDetail} />
           <Route exact path="/rigs" component={ProductList} />

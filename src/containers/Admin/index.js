@@ -6,14 +6,38 @@ import AddProduct from '../../components/AddProduct'
 import ProductGrid from '../../components/ProductGrid'
 import { Button, Modal } from 'react-bootstrap'
 
-class Account extends Component {
+class Admin extends Component {
   constructor(props) {
     super(props)
 
     this.handleShow = this.handleShow.bind(this)
     this.handleClose = this.handleClose.bind(this)
-
+    this.handleSignOut = this.handleSignOut.bind(this)
     this.state = { showAddModal: false }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { auth, firebase, history } = this.props
+
+    if (!auth.isLoaded) {
+      return
+    }
+
+    if (auth.isEmpty) {
+      return history.push('/login')
+    }
+
+    if (nextProps.profile.displayName && !nextProps.profile.admin) {
+      firebase.auth().signOut()
+      history.push('/')
+    }
+
+  }
+
+  handleSignOut(ev) {
+    ev.preventDefault()
+    this.props.firebase.auth().signOut()
+    window.location = '/'
   }
 
   handleClose() {
@@ -25,7 +49,11 @@ class Account extends Component {
   }
 
   render () {
-    const { auth, products } = this.props
+    const { auth, profile, products } = this.props
+
+    if (!profile.admin) {
+      return false
+    }
 
     return (
       <div>
@@ -33,7 +61,12 @@ class Account extends Component {
           <div>
             <h2>Admin</h2>
 
-            <Button onClick={this.handleShow}>Add Rig</Button>
+            <div className="row">
+              <div className="col-xs-12">
+                <Button onClick={this.handleShow}>Add Rig</Button>
+                <Button onClick={this.handleSignOut} className="pull-right">Sign Out</Button>
+              </div>
+            </div>
 
             <h3>Rigs</h3>
             <div className="row text-center">
@@ -79,4 +112,4 @@ export default compose(
       profile,
     })
   )
-)(Account)
+)(Admin)

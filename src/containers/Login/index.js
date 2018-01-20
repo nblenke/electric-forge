@@ -3,12 +3,13 @@ import GoogleButton from 'react-google-button'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
 import { firebaseConnect } from 'react-redux-firebase'
+import Loading from '../../components/Loading'
 
 class Login extends Component {
   componentDidUpdate() {
     const { auth, history } = this.props
 
-    if (auth) {
+    if (auth.isLoaded && !auth.isEmpty) {
       history.push('/admin')
     }
   }
@@ -25,15 +26,16 @@ class Login extends Component {
   render () {
     const { auth } = this.props
 
-    console.log(auth)
+    if (!auth.isLoaded) {
+      return (
+        <Loading />
+      )
+    }
 
     return (
       <div>
-        {auth.isEmpty ?
-          <div>
-            Sign In
-              <GoogleButton onClick={this.googleLogin} />
-          </div>
+        {auth && auth.isEmpty ?
+          <GoogleButton onClick={this.googleLogin} />
         : null }
       </div>
     )
