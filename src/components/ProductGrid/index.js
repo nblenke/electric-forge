@@ -6,8 +6,9 @@ export default ({
     products,
     hasDelete,
     hasEdit,
+    onDelete,
     showOnlyUser,
-    uid
+    uid,
   }) => (
   <div className="product-list">
     {!isEmpty(products) ?
@@ -19,8 +20,10 @@ export default ({
                 <ProductItem
                   hasDelete={hasDelete}
                   hasEdit={hasEdit}
+                  hasDescription={false}
                   id={key}
                   product={products[key]}
+                  onDelete={onDelete}
                 />
               </div>
             }

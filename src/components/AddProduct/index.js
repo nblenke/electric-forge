@@ -3,9 +3,9 @@ import { compose } from 'redux'
 import { connect } from 'react-redux'
 import { firebaseConnect } from 'react-redux-firebase'
 import Dropzone from 'react-dropzone'
+import { setProductImagePath } from '../../utils'
+import { FILES_PATH } from '../../constants'
 import './styles.css'
-
-const filesPath = 'uploadedImages'
 
 class AddProduct extends Component {
   constructor(props) {
@@ -17,26 +17,13 @@ class AddProduct extends Component {
     }
   }
 
-  setProductImagePath = (productId) => {
-    const { firebase } = this.props
-    const storageRef = firebase.storage().ref()
-    const ref = storageRef.child(`uploadedImages/${productId}`)
-
-    ref.getDownloadURL()
-      .then((imgPath) => {
-        firebase.update(`/products/${productId}`, { imgPath })
-      })
-      .catch((err) => {
-        console.log(err.code)
-      })
-  }
-
   handleDrop = (files) => {
     this.setState({ files })
   }
 
   handleAdd = () => {
     const { firebase } = this.props
+    const { files } = this.state
 
     firebase.pushWithMeta('/products', {
       title: this.title.value,
@@ -47,18 +34,18 @@ class AddProduct extends Component {
     }).then((ref) => {
       const productId = ref.path.pieces_[1]
 
-      // TODO: this is sketchy, PERMISSION_DENIED error thrown but it works.
-      // This is probably because the name option is a beta feature, see:
-      // https://github.com/prescottprue/react-redux-firebase/issues/285
-      firebase.uploadFile(filesPath, this.state.files[0], filesPath, {
-        name: productId
-      })
-      .then(() => {
-        this.setProductImagePath(productId)
-      })
-      .catch((err) => {
-        this.setProductImagePath(productId)
-      })
+      if (files.length) {
+        firebase.uploadFile(FILES_PATH, files[0], null, {
+          name: productId
+        })
+        .then(() => {
+          setProductImagePath(productId, firebase)
+          this.setState({ files: [] })
+        })
+        .catch((error) => {
+          console.log(`upload file error: ${error}`)
+        })
+      }
 
       this.setState({
         showSuccess: true
@@ -103,7 +90,7 @@ class AddProduct extends Component {
 
         <div className="form-group">
           <label>Description</label>
-          <input type="text" className="form-control" ref={ref => { this.description = ref }} />
+          <textarea className="form-control" ref={ref => { this.description = ref }} />
         </div>
 
         <div className="form-group">
@@ -128,7 +115,7 @@ class AddProduct extends Component {
           <div className="col-xs-12">
             {showSuccess
               ? <div className="panel panel-success">
-                  <div className="panel-heading">Rig Added Successfully</div>
+                  <div className="panel-heading">Rig Added</div>
                 </div>
               : null }
           </div>
@@ -141,7 +128,7 @@ class AddProduct extends Component {
 
 export default compose(
   firebaseConnect([
-    filesPath,
+    FILES_PATH,
     'products',
   ]),
   connect(
@@ -153,6 +140,6 @@ export default compose(
     })
   ),
   connect(({ firebase: data }) => ({
-    uploadedImages: data[filesPath]
+    uploadedImages: data[FILES_PATH]
   }))
 )(AddProduct)

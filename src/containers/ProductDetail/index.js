@@ -37,14 +37,14 @@ class ProductDetail extends Component {
         <div className="row">
           <div className="col-xs-12 col-sm-5">
             {imgPath ? (
-              <img src={imgPath} alt={title} />
+              <img src={imgPath} alt={title} className="product-item__image" />
             ) : <div className="product-item__no-image"></div> }
           </div>
 
           <div className="col-xs-12 col-sm-7">
             <h3>{title}</h3>
             <p>{description}</p>
-            <p>{price}</p>
+            <p>Price: {price}</p>
             <p>Currently Mining:</p>
             <p>Ethermine Id:</p>
             <p>Began Mining:</p>

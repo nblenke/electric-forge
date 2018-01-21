@@ -5,6 +5,7 @@ import { firebaseConnect } from 'react-redux-firebase'
 import AddProduct from '../../components/AddProduct'
 import ProductGrid from '../../components/ProductGrid'
 import { Button, Modal } from 'react-bootstrap'
+import { FILES_PATH } from '../../constants'
 
 class Admin extends Component {
   constructor(props) {
@@ -12,6 +13,7 @@ class Admin extends Component {
 
     this.handleShow = this.handleShow.bind(this)
     this.handleClose = this.handleClose.bind(this)
+    this.handleDelete = this.handleDelete.bind(this)
     this.handleSignOut = this.handleSignOut.bind(this)
     this.state = { showAddModal: false }
   }
@@ -48,6 +50,18 @@ class Admin extends Component {
     this.setState({ showAddModal: true })
   }
 
+  handleDelete(id, imgPath) {
+    const { firebase } = this.props
+
+    firebase.remove(`/products/${id}`)
+      .then(() => {
+        if (!imgPath) {
+          return
+        }
+        firebase.deleteFile(`${FILES_PATH}/${id}`, null)
+      })
+  }
+
   render () {
     const { auth, profile, products } = this.props
 
@@ -78,6 +92,7 @@ class Admin extends Component {
                 showOnlyUser={true}
                 showInactive={true}
                 uid={auth.uid}
+                onDelete={this.handleDelete}
               />
             </div>
 

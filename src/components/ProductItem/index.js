@@ -10,7 +10,6 @@ class ProductItem extends Component {
     super(props)
     this.handleShow = this.handleShow.bind(this)
     this.handleClose = this.handleClose.bind(this)
-    this.handleDelete = this.handleDelete.bind(this)
 
     this.state = {
       showEditModal: false,
@@ -25,18 +24,15 @@ class ProductItem extends Component {
     this.setState({ showEditModal: true })
   }
 
-  handleDelete() {
-    const { firebase, id } = this.props
-    firebase.remove(`/products/${id}`)
-  }
-
   render() {
     const {
       className,
       hasDelete,
+      hasDescription,
       hasEdit,
       id,
       product,
+      onDelete,
     } = this.props
 
     const { description, imgPath, price, purchased, title } = product
@@ -49,17 +45,19 @@ class ProductItem extends Component {
       <div className={`product-item ${className ? className : ''}`}>
         <Link to={`/rig/${id}`}>
           {imgPath ? (
-            <img src={imgPath} alt={title} />
+            <div className="product-item__image-wrap">
+              <img src={imgPath} alt={title} />
+            </div>
           ) : <div className="product-item__no-image"></div> }
         </Link>
         <div className="caption">
           <h3><Link to={`/rig/${id}`}>{title}</Link></h3>
-          <p>{description}</p>
+          {hasDescription && <p>{description}</p>}
           <p>{price}</p>
 
           <div className="row">
             {hasDelete ?
-              <button className="btn btn-default" onClick={this.handleDelete}>
+              <button className="btn btn-default" onClick={(ev) => onDelete(id, imgPath)}>
                 Delete
               </button>
             : null}
