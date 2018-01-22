@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { firebaseConnect } from 'react-redux-firebase'
 import { Button, Modal } from 'react-bootstrap'
 import Purchase from '../../components/Purchase'
+import { getEthermineData } from '../../utils'
 import './styles.css'
 
 class ProductDetail extends Component {
@@ -11,7 +12,24 @@ class ProductDetail extends Component {
     super(props)
     this.handleShow = this.handleShow.bind(this)
     this.handleClose = this.handleClose.bind(this)
-    this.state = { showPurchaseModal: false }
+    this.state = {
+      hasFetched: false,
+      showPurchaseModal: false,
+    }
+  }
+
+  componentDidUpdate() {
+    const { firebase, match, products } = this.props
+
+    if (!products || this.state.hasFetched) {
+      return
+    }
+
+    const productId = match.params.id
+    const product = products[productId]
+
+    this.setState({ hasFetched: true })
+    getEthermineData(productId, product, firebase)
   }
 
   handleClose() {
@@ -30,28 +48,80 @@ class ProductDetail extends Component {
     }
 
     const product = products[match.params.id]
-    const { description, imgPath, price, title } = product
+    const {
+      description,
+      ethermineActiveWorkers,
+      ethermineAverageHashrate,
+      ethermineBtcPerMin,
+      ethermineCoinsPerMin,
+      ethermineCurrentHashrate,
+      ethermineId,
+      ethermineUnpaid,
+      ethermineUsdPerMin,
+      ethermineValidShares,
+      imgPath,
+      price,
+      // purchased,
+      title,
+    } = product
 
     return (
       <div className="container">
         <div className="row">
-          <div className="col-xs-12 col-sm-5">
+          <div className="col-xs-12 col-sm-3">
             {imgPath ? (
-              <img src={imgPath} alt={title} className="product-item__image" />
-            ) : <div className="product-item__no-image"></div> }
+              <div className="product-detail__image-wrap">
+                <img src={imgPath} alt={title} />
+              </div>
+            ) : <div className="product-detail__no-image"></div> }
           </div>
 
-          <div className="col-xs-12 col-sm-7">
-            <h3>{title}</h3>
-            <p>{description}</p>
-            <p>Price: {price}</p>
-            <p>Currently Mining:</p>
-            <p>Ethermine Id:</p>
-            <p>Began Mining:</p>
-            <p>Kwh:</p>
-            <p>Current Monthly Output:</p>
-            <p>24 hour Hashrate:</p>
-            <p>Number Of Active Workers:</p>
+          <div className="col-xs-12 col-sm-9">
+            <h3 className="product-detail__title">{title}</h3>
+            <h4 className="product-detail__price"><strong>Price:</strong> {price}</h4>
+            <p className="product-detail__description">{description}</p>
+            <p className="product-detail__miner-id"><strong>Miner Id:</strong> {ethermineId}</p>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-xs-12">
+            <table className="table table-bordered table-striped product-detail__table">
+              <tbody>
+                <tr>
+                  <td>Active Workers:</td>
+                  <td>{ethermineActiveWorkers}</td>
+                </tr>
+                <tr>
+                  <td>BTC/Min:</td>
+                  <td>{ethermineBtcPerMin}</td>
+                </tr>
+                <tr>
+                  <td>USD/Min:</td>
+                  <td>{ethermineUsdPerMin}</td>
+                </tr>
+                <tr>
+                  <td>Coin/Min:</td>
+                  <td>{ethermineCoinsPerMin}</td>
+                </tr>
+                <tr>
+                  <td>Avg Hashrate:</td>
+                  <td>{ethermineAverageHashrate}</td>
+                </tr>
+                <tr>
+                  <td>Current Hashrate:</td>
+                  <td>{ethermineCurrentHashrate}</td>
+                </tr>
+                <tr>
+                  <td>Valid Shares:</td>
+                  <td>{ethermineValidShares}</td>
+                </tr>
+                <tr>
+                  <td>Unpaid Balance (in base units):</td>
+                  <td>{ethermineUnpaid}</td>
+                </tr>
+              </tbody>
+            </table>
+
             <button className="btn btn-primary btn-lg" onClick={this.handleShow}>Purchase Rig</button>
           </div>
         </div>

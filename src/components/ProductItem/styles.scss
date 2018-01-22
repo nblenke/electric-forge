@@ -6,12 +6,30 @@
 	}
 }
 
-.product-item__image-wrap {
-
+.product-item__image {
+	height: 160px;
+	background-size: cover;
+  background-position: center;
 }
 
 .product-item__no-image {
 	background: #eee;
 	width: 100%;
-	height: 200px;
+	height: 160px;
+}
+
+.product-item__title {
+	margin: 5px 0 0;
+	font-size: 17px;
+	font-weight: bold;
+}
+
+.product-item__price {
+	margin: 0 0 5px;
+	color: #555;
+}
+
+.product-item__detail {
+	font-size: 12px;
+  word-break: break-word;
 }

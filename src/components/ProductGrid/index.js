@@ -16,7 +16,7 @@ export default ({
         <div key={key}>
           {showOnlyUser && uid !== products[key].createdBy
             ? null
-            : <div className="col-xs-6 col-sm-4 col-md-3">
+            : <div className="col-xs-12 col-sm-4 col-md-3">
                 <ProductItem
                   hasDelete={hasDelete}
                   hasEdit={hasEdit}

@@ -9,32 +9,36 @@ class Home extends Component {
   render () {
     const { products } = this.props
     return (
-      <div className="container">
-        <section className="jumbotron hero-spacer">
-          <h2>Start Mining Today!</h2>
-          <h3>Electric Forge provides 100% of the resources and tools
-           you need to mine CryptoCoins, including BitCoin and Ethereum</h3>
+      <div className="home-page">
+        <section className="hero">
+          <div className="container">
+            <h2>Start Mining Today!</h2>
+            <h3>Electric Forge provides 100% of the resources and tools
+             you need to mine CryptoCoins, including BitCoin and Ethereum</h3>
+          </div>
         </section>
 
-        <div className="row">
-          <div className="col-xs-12">
-            <h3>Operational Rigs</h3>
+        <div className="container">
+          <div className="row">
+            <div className="col-xs-12">
+              <h3>Operational Rigs</h3>
+            </div>
           </div>
-        </div>
-        <div className="row">
-          <div className="col-xs-12">
-            <ProductSwiper products={products} />
+          <div className="row">
+            <div className="col-xs-12">
+              <ProductSwiper products={products} />
+            </div>
           </div>
-        </div>
 
-        <div className="row">
-          <div className="col-xs-12">
-            <h3>Available Rigs</h3>
+          <div className="row">
+            <div className="col-xs-12">
+              <h3>Available Rigs</h3>
+            </div>
           </div>
-        </div>
-        <div className="row">
-          <div className="col-xs-12">
-            <ProductSwiper products={products} />
+          <div className="row">
+            <div className="col-xs-12">
+              <ProductSwiper products={products} />
+            </div>
           </div>
         </div>
       </div>

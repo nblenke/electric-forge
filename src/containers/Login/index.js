@@ -33,7 +33,7 @@ class Login extends Component {
     }
 
     return (
-      <div>
+      <div className="container">
         {auth && auth.isEmpty ?
           <GoogleButton onClick={this.googleLogin} />
         : null }

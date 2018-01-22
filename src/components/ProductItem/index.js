@@ -35,7 +35,22 @@ class ProductItem extends Component {
       onDelete,
     } = this.props
 
-    const { description, imgPath, price, purchased, title } = product
+    const {
+      description,
+      ethermineActiveWorkers,
+      ethermineAverageHashrate,
+      ethermineBtcPerMin,
+      ethermineCoinsPerMin,
+      // ethermineCurrentHashrate,
+      // ethermineId,
+      // ethermineUnpaid,
+      ethermineUsdPerMin,
+      // ethermineValidShares,
+      imgPath,
+      price,
+      purchased,
+      title,
+    } = product
 
     if (purchased) {
       return false
@@ -45,15 +60,21 @@ class ProductItem extends Component {
       <div className={`product-item ${className ? className : ''}`}>
         <Link to={`/rig/${id}`}>
           {imgPath ? (
-            <div className="product-item__image-wrap">
-              <img src={imgPath} alt={title} />
-            </div>
+            <div className="product-item__image" style={{ backgroundImage: `url(${imgPath})` }} />
           ) : <div className="product-item__no-image"></div> }
         </Link>
         <div className="caption">
-          <h3><Link to={`/rig/${id}`}>{title}</Link></h3>
+          <h3 className="product-item__title"><Link to={`/rig/${id}`}>{title}</Link></h3>
+          <p className="product-item__price">{price}</p>
           {hasDescription && <p>{description}</p>}
-          <p>{price}</p>
+          <p className="product-item__detail">
+            <strong>Active Workers:</strong> {ethermineActiveWorkers}<br />
+            <strong>BTC/Min:</strong> {ethermineBtcPerMin}<br />
+            <strong>USD/Min:</strong> {ethermineUsdPerMin}<br />
+            <strong>Coin/Min:</strong> {ethermineCoinsPerMin}<br />
+            <strong>Avg Hashrate:</strong> {ethermineAverageHashrate}
+          </p>
+
 
           <div className="row">
             {hasDelete ?

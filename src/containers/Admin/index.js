@@ -70,7 +70,7 @@ class Admin extends Component {
     }
 
     return (
-      <div>
+      <div className="container">
         {auth && auth.displayName ? (
           <div>
             <h2>Admin</h2>

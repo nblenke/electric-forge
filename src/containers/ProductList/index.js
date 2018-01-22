@@ -14,7 +14,7 @@ class ProductList extends Component {
             <h3>Rigs</h3>
           </div>
         </div>
-        <div className="row text-center">
+        <div className="row">
           <ProductGrid products={products} />
         </div>
       </div>

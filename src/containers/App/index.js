@@ -26,15 +26,15 @@ export default () => (
       <div>
         <ScrollToTop />
         <Header />
-        <div className="container">
-          <Route exact path="/" component={Home} />
-          <Route exact path="/about" component={About} />
-          <Route exact path="/admin" component={Admin} />
-          <Route exact path="/login" component={Login} />
-          <Route exact path="/rig/:id" component={ProductDetail} />
-          <Route exact path="/rigs" component={ProductList} />
-          <Route exact path="/terms" component={Terms} />
-        </div>
+
+        <Route exact path="/" component={Home} />
+        <Route exact path="/about" component={About} />
+        <Route exact path="/admin" component={Admin} />
+        <Route exact path="/login" component={Login} />
+        <Route exact path="/rig/:id" component={ProductDetail} />
+        <Route exact path="/rigs" component={ProductList} />
+        <Route exact path="/terms" component={Terms} />
+
         <Footer />
       </div>
     </Router>

@@ -5,17 +5,11 @@
 @import 'https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css';
 @import 'https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.0.7/css/swiper.min.css';
 
-$green: green;
-
 body {
 	font-family: "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 16px;
   line-height: 1.45;
   color: #2b3e50;
-}
-
-@mixin foo {
-	color: $green;
 }
 
 .navbar {
@@ -28,4 +22,8 @@ img {
 
 textarea {
 	min-height: 200px;
+}
+
+a {
+	color: #000;
 }
