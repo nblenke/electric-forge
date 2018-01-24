@@ -10,52 +10,50 @@ export default class ProductSwiper extends Component {
   }
 
   render() {
-    const {
-      products,
-      showOnlyUser,
-      uid
-    } = this.props
+    const { products } = this.props
 
     if (isEmpty(products)) {
       return false
     }
 
+    const params = {
+      pagination: {
+        el: '.swiper-pagination',
+        type: 'bullets',
+        clickable: true
+      },
+      navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev'
+      },
+      onInit: this.handleInit,
+      runCallbacksOnInit: false,
+      loop: true,
+      autoheight: true,
+      slidesPerView: 4,
+      spaceBetween: 20,
+      breakpoints: {
+        1024: {
+          slidesPerView: 3,
+        },
+        768: {
+          slidesPerView: 1,
+        }
+      }
+    }
+
     return(
       <div className="product-swiper">
-        <Swiper
-          runCallbacksOnInit={false}
-          loop={true}
-          loopAdditionalSlides={4}
-          loopedSlides={products.length}
-          paginationClickable={true}
-          autoheight={true}
-          spaceBetween={10}
-          slidesPerView={4}
-          centeredSlides={true}
-          breakpoints={{
-            1024: {
-              slidesPerView: 3,
-              spaceBetween: 40,
-            },
-            768: {
-              slidesPerView: 1,
-              spaceBetween: 30,
-            }
-          }}
-          onInit={this.handleInit}>
-            {Object.keys(products).map((key) => (
-              <div key={key}>
-                {showOnlyUser && uid !== products[key].uid
-                  ? null
-                  : <div>
-                      <ProductItem
-                        id={key}
-                        product={products[key]}
-                      />
-                    </div>
-                }
-              </div>
-            ))}
+        <Swiper {...params}>
+          {Object.keys(products).map((key) => (
+            products[key].purchased
+              ? null
+              : (
+                <div key={key} data-foo={products[key].purchased}>
+                  <ProductItem id={key} product={products[key]} />
+                </div>
+              )
+          ))}
         </Swiper>
       </div>
     )

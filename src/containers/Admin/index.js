@@ -3,6 +3,7 @@ import { compose } from 'redux'
 import { connect } from 'react-redux'
 import { firebaseConnect } from 'react-redux-firebase'
 import AddProduct from '../../components/AddProduct'
+import OrderItem from '../../components/OrderItem'
 import ProductGrid from '../../components/ProductGrid'
 import { Button, Modal } from 'react-bootstrap'
 import { FILES_PATH } from '../../constants'
@@ -11,8 +12,8 @@ class Admin extends Component {
   constructor(props) {
     super(props)
 
-    this.handleShow = this.handleShow.bind(this)
-    this.handleClose = this.handleClose.bind(this)
+    this.handleAddShow = this.handleAddShow.bind(this)
+    this.handleAddClose = this.handleAddClose.bind(this)
     this.handleDelete = this.handleDelete.bind(this)
     this.handleSignOut = this.handleSignOut.bind(this)
     this.state = { showAddModal: false }
@@ -42,11 +43,11 @@ class Admin extends Component {
     window.location = '/'
   }
 
-  handleClose() {
+  handleAddClose() {
     this.setState({ showAddModal: false })
   }
 
-  handleShow() {
+  handleAddShow() {
     this.setState({ showAddModal: true })
   }
 
@@ -63,53 +64,61 @@ class Admin extends Component {
   }
 
   render () {
-    const { auth, profile, products } = this.props
+    const { auth, orders, profile, products } = this.props
 
-    if (!profile.admin) {
+    if (!profile.admin || (auth && !auth.displayName)) {
       return false
     }
 
     return (
       <div className="container">
-        {auth && auth.displayName ? (
-          <div>
+        <div className="row">
+          <div className="col-xs-12">
             <h2>Admin</h2>
-
-            <div className="row">
-              <div className="col-xs-12">
-                <Button onClick={this.handleShow}>Add Rig</Button>
-                <Button onClick={this.handleSignOut} className="pull-right">Sign Out</Button>
-              </div>
-            </div>
-
-            <h3>Rigs</h3>
-            <div className="row text-center">
-              <ProductGrid
-                hasDelete={true}
-                hasEdit={true}
-                hasActiveToggle={true}
-                products={products}
-                showOnlyUser={true}
-                showInactive={true}
-                uid={auth.uid}
-                onDelete={this.handleDelete}
-              />
-            </div>
-
-            <Modal show={this.state.showAddModal} onHide={this.handleClose}>
-              <Modal.Header closeButton>
-                <Modal.Title>Add Rig</Modal.Title>
-              </Modal.Header>
-              <Modal.Body>
-                <AddProduct />
-              </Modal.Body>
-              <Modal.Footer>
-                <Button onClick={this.handleClose}>Close</Button>
-              </Modal.Footer>
-            </Modal>
-
+            <Button onClick={this.handleSignOut} className="pull-right">Sign Out</Button>
           </div>
-        ) : null}
+        </div>
+
+        {orders ? (
+          <div className="row">
+            <div className="col-xs-12">
+              <h3>Orders</h3>
+              <table className="table table-bordered table-responsive">
+                <tbody>
+                  {Object.keys(orders).map((key) => (
+                    <OrderItem key={key} order={orders[key]} />
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        ) : null }
+
+        <h3>Rigs <Button onClick={this.handleAddShow}>Add Rig</Button></h3>
+        <div className="row">
+          <ProductGrid
+            hasDelete={true}
+            hasEdit={true}
+            hasActiveToggle={true}
+            products={products}
+            showPurchased={true}
+            uid={auth.uid}
+            onDelete={this.handleDelete}
+          />
+        </div>
+
+        <Modal show={this.state.showAddModal} onHide={this.handleAddClose}>
+          <Modal.Header closeButton>
+            <Modal.Title>Add Rig</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <AddProduct />
+          </Modal.Body>
+          <Modal.Footer>
+            <Button onClick={this.handleAddClose}>Close</Button>
+          </Modal.Footer>
+        </Modal>
+
       </div>
     )
   }
@@ -117,12 +126,14 @@ class Admin extends Component {
 
 export default compose(
   firebaseConnect([
+    'orders',
     'products',
   ]),
   connect(
-    ({ firebase: { auth, authError, profile, data: { products }} }) => ({
+    ({ firebase: { auth, authError, profile, data: { orders, products }} }) => ({
       auth,
       authError,
+      orders,
       products,
       profile,
     })

@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { firebaseConnect } from 'react-redux-firebase'
 import ProductSwiper from '../../components/ProductSwiper'
 import './styles.css'
+// import logo from './logo1.png'
 
 class Home extends Component {
   render () {
@@ -12,9 +13,12 @@ class Home extends Component {
       <div className="home-page">
         <section className="hero">
           <div className="container">
-            <h2>Start Mining Today!</h2>
-            <h3>Electric Forge provides 100% of the resources and tools
-             you need to mine CryptoCoins, including BitCoin and Ethereum</h3>
+            {/*<img src={logo} alt="Logo" className="hero__logo" />*/}
+            <div className="hero__copy">
+              <h2>Start Mining Today!</h2>
+              <h3>Electric Forge provides 100% of the resources and tools
+               you need to mine CryptoCoins, including BitCoin and Ethereum</h3>
+            </div>
           </div>
         </section>
 

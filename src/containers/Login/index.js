@@ -28,7 +28,9 @@ class Login extends Component {
 
     if (!auth.isLoaded) {
       return (
-        <Loading />
+        <div className="container">
+          <Loading />
+        </div>
       )
     }
 

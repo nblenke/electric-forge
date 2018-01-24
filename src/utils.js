@@ -16,7 +16,6 @@ export const setProductImagePath = (productId, firebase) => {
 }
 
 export const getEthermineData = ( productId, product, firebase) => {
-  console.log('getEthermineData')
   const { ethermineId, ethermineUpdateNext } = product
   const format = 'YYYY-MM-DD HH:mm Z'
   const timeToUpdateNewEncoded = window.encodeURIComponent(Moment().add(2, 'hours').format(format))

@@ -3,9 +3,7 @@ import { compose } from 'redux'
 import { connect } from 'react-redux'
 import { firebaseConnect } from 'react-redux-firebase'
 import { Field, reduxForm } from 'redux-form'
-import { Link } from 'react-router-dom'
 import Input from '../Input'
-import Checkbox from '../Checkbox'
 import './styles.css'
 
 class Purchase extends Component {
@@ -25,11 +23,12 @@ class Purchase extends Component {
     ev.preventDefault()
     const { firebase, id } = this.props
 
-    firebase.set(`/orders/${id}`, {
+    firebase.setWithMeta(`/orders/${id}`, {
       email: this.email.value,
       firstName: this.firstName.value,
       lastName: this.lastName.value,
-      productId: id,
+      phone: this.phone.value,
+      orderId: id,
     }).catch((error) => {
       this.setState({ errorMsg: error.message })
     })
@@ -43,6 +42,7 @@ class Purchase extends Component {
 
   render () {
     const { product, invalid, pristine, submitting } = this.props
+    const { description, imgPath, price, title } = product
 
     return (
       <div className="purchase-page">
@@ -55,13 +55,24 @@ class Purchase extends Component {
           <form onSubmit={this.handleSubmit}>
             <p>You are purchasing:</p>
             <div className="panel panel-default">
-              <div className="panel-heading">{product.title}</div>
+              <div className="panel-heading">{title}</div>
               <div className="panel-body">
-                {product.description}<br />
-                {product.price}<br />
+                <div className="row">
+                  <div className="col-xs-3">
+                    {imgPath ? (
+                      <div className="purchase__image-wrap">
+                        <img src={imgPath} alt={title} />
+                      </div>
+                    ) : <div className="purchase__no-image"></div> }
+                  </div>
+                  <div className="col-xs-9">
+                    <strong>{price}</strong><br />
+                    {description}
+                  </div>
+                </div>
               </div>
             </div>
-            <div className="row form-group">
+            <div className="row">
               <div className="col-xs-12 col-sm-6">
                 <label>First Name</label>
                 <Field
@@ -84,6 +95,20 @@ class Purchase extends Component {
                   id="lastName"
                   name="lastName"
                   placeholder="Last Name"
+                />
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-xs-12 col-sm-6">
+                <label>Phone</label>
+                <Field
+                  ref={ref => { this.phone = ref }}
+                  component={Input}
+                  className="form-control"
+                  type="tel"
+                  id="phone"
+                  name="phone"
+                  placeholder="Phone"
                 />
               </div>
             </div>
@@ -112,16 +137,6 @@ class Purchase extends Component {
                   placeholder="Confirm Email"
                 />
               </div>
-            </div>
-            <div className="checkbox">
-              <label>
-                <Field
-                  component={Checkbox}
-                  id="agree"
-                  name="agree"
-                />
-                By checking this box you agree to the <Link to="/terms">Terms & Conditions</Link>
-              </label>
             </div>
 
             <div className="form-group">
@@ -188,8 +203,8 @@ export default compose(
         errors.confirmEmail = 'E-mail addresses must match'
       }
 
-      if (!values.agree) {
-        errors.agree = 'This field is required'
+      if (!values.phone) {
+        errors.phone = 'This field is required'
       }
 
       return errors

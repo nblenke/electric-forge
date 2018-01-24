@@ -4,7 +4,32 @@
     min-height: 300px;
     margin: -20px 0 0;
     padding: 40px 0;
-    background: #eee;
+    // background: no-repeat url(./hero1.png);
+    // background-size: cover;
+    // background-position: center;
+    background: linear-gradient(0, #340730, #993a00);
+    color: #fff;
+    font-weight: bold;
+    text-shadow: 0 1px 5px rgba(0, 0, 0, 0.4);
+  }
+
+  .hero__logo {
+    width: 140px;
+    display: block;
+    margin: auto;
+  }
+
+  .hero__copy {
+    margin: 30px auto 0;
+    max-width: 480px;
+    text-align: center;
+
+    h2 {
+      color: #ffe400;
+      font-family: 'Open Sans Condensed', sans-serif;
+      font-weight: bold;
+      font-size: 40px;
+    }
   }
 
 }

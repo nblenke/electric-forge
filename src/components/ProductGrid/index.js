@@ -7,26 +7,22 @@ export default ({
     hasDelete,
     hasEdit,
     onDelete,
-    showOnlyUser,
+    showPurchased,
     uid,
   }) => (
   <div className="product-list">
     {!isEmpty(products) ?
       Object.keys(products).map((key) => (
-        <div key={key}>
-          {showOnlyUser && uid !== products[key].createdBy
-            ? null
-            : <div className="col-xs-12 col-sm-4 col-md-3">
-                <ProductItem
-                  hasDelete={hasDelete}
-                  hasEdit={hasEdit}
-                  hasDescription={false}
-                  id={key}
-                  product={products[key]}
-                  onDelete={onDelete}
-                />
-              </div>
-            }
+        <div key={key} className="col-xs-12 col-sm-4 col-md-3">
+          <ProductItem
+            hasDelete={hasDelete}
+            hasEdit={hasEdit}
+            hasDescription={false}
+            id={key}
+            product={products[key]}
+            onDelete={onDelete}
+            showPurchased={showPurchased}
+          />
         </div>
       ))
     : null}

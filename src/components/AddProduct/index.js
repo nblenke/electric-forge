@@ -26,11 +26,14 @@ class AddProduct extends Component {
     const { files } = this.state
 
     firebase.pushWithMeta('/products', {
-      title: this.title.value,
+      birthDate: this.birthDate.value,
+      coinType: this.coinType.value,
       description: this.description.value,
       ethermineId: this.ethermineId.value,
+      kwh: this.kwh.value,
       price: this.price.value,
       purchased: false,
+      title: this.title.value,
     }).then((ref) => {
       const productId = ref.path.pieces_[1]
 
@@ -87,17 +90,26 @@ class AddProduct extends Component {
           <label>Title</label>
           <input type="text" className="form-control" ref={ref => { this.title = ref }} />
         </div>
-
         <div className="form-group">
           <label>Description</label>
           <textarea className="form-control" ref={ref => { this.description = ref }} />
         </div>
-
         <div className="form-group">
           <label>Price</label>
           <input type="text" className="form-control" ref={ref => { this.price = ref }} />
         </div>
-
+        <div className="form-group">
+          <label>kWh</label>
+          <input type="text" className="form-control" ref={ref => { this.kwh = ref }} />
+        </div>
+        <div className="form-group">
+          <label>Birth Date</label>
+          <input type="text" className="form-control" ref={ref => { this.birthDate = ref }} />
+        </div>
+        <div className="form-group">
+          <label>Coin Type</label>
+          <input type="text" className="form-control" ref={ref => { this.coinType = ref }} />
+        </div>
         <div className="form-group">
           <label>Ethermine ID</label>
           <input type="text" className="form-control" ref={ref => { this.ethermineId = ref }} />

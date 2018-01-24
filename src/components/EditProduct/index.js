@@ -21,10 +21,13 @@ class EditProduct extends Component {
     const { firebase, id } = this.props
 
     firebase.update(`/products/${id}`, {
-      title: this.title.value,
+      birthDate: this.birthDate.value,
+      coinType: this.coinType.value,
       description: this.description.value,
       ethermineId: this.ethermineId.value,
+      kwh: this.kwh.value,
       price: this.price.value,
+      title: this.title.value,
     }).then((ref) => {
       this.setState({
         showSuccess: true
@@ -63,7 +66,7 @@ class EditProduct extends Component {
 
   render () {
     const { product, id } = this.props
-    const { description, ethermineId, imgPath, price, title } = product
+    const { birthDate, coinType, kwh, description, ethermineId, imgPath, price, title } = product
     const { files } = this.state
 
     return (
@@ -99,44 +102,36 @@ class EditProduct extends Component {
         </div>
         <div className="form-group">
           <label>ID</label>
-          <input
-            type='text'
-            disabled="disabled"
-            className="form-control"
-            defaultValue={id} />
+          <input type="text" disabled="disabled" className="form-control" defaultValue={id} />
         </div>
         <div className="form-group">
           <label>Title</label>
-          <input
-            type='text'
-            className="form-control"
-            defaultValue={title}
-            ref={ref => { this.title = ref }} />
+          <input type="text" className="form-control" defaultValue={title} ref={ref => { this.title = ref }} />
         </div>
         <div className="form-group">
           <label>Description</label>
-          <textarea
-            className="form-control"
-            defaultValue={description}
-            ref={ref => { this.description = ref }} />
+          <textarea className="form-control" defaultValue={description} ref={ref => { this.description = ref }} />
+        </div>
+        <div className="form-group">
+          <label>Price</label>
+          <input type="text" className="form-control" defaultValue={price} ref={ref => { this.price = ref }} />
+        </div>
+        <div className="form-group">
+          <label>kWh</label>
+          <input type="text" className="form-control" defaultValue={kwh} ref={ref => { this.kwh = ref }} />
+        </div>
+        <div className="form-group">
+          <label>Birth Date</label>
+          <input type="text" className="form-control" defaultValue={birthDate} ref={ref => { this.birthDate = ref }} />
+        </div>
+        <div className="form-group">
+          <label>Coin Type</label>
+          <input type="text" className="form-control" defaultValue={coinType} ref={ref => { this.coinType = ref }} />
         </div>
         <div className="form-group">
           <label>Ethermine ID</label>
-          <input
-            type='text'
-            className="form-control"
-            defaultValue={ethermineId}
-            ref={ref => { this.ethermineId = ref }} />
+          <input type="text" className="form-control" defaultValue={ethermineId} ref={ref => { this.ethermineId = ref }} />
         </div>
-        <div className="form-group">
-          <label>price</label>
-          <input
-            type='text'
-            className="form-control"
-            defaultValue={price}
-            ref={ref => { this.price = ref }} />
-        </div>
-
 
         <div className="form-group">
           <button className="btn btn-primary" onClick={this.handleSave}>Save</button>

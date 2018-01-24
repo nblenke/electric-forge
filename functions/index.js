@@ -37,7 +37,7 @@ const APP_NAME = 'Electric Forge';
 
 exports.messenger = functions.database
   .ref('/orders/{orderId}').onWrite(event => {
-    const { email, firstName, productId } = event.data._delta;
+    const { email, firstName, orderId } = event.data._delta;
 
     const mailOptions = {
       from: `${APP_NAME} <noreply@firebase.com>`,
@@ -45,7 +45,7 @@ exports.messenger = functions.database
     };
 
     let body = `Hey ${firstName}! Welcome to ${APP_NAME}.\n`;
-    body += 'Your order has been placed and a representative will contact you shortly.';
+    body += `Your order(#${orderId}) has been placed and a representative will contact you shortly.\n`;
 
     mailOptions.subject = `Welcome to ${APP_NAME}!`;
     mailOptions.text = body;

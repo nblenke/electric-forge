@@ -49,17 +49,20 @@ class ProductDetail extends Component {
 
     const product = products[match.params.id]
     const {
+      birthDate,
+      coinType,
       description,
       ethermineActiveWorkers,
       ethermineAverageHashrate,
-      ethermineBtcPerMin,
-      ethermineCoinsPerMin,
+      // ethermineBtcPerMin,
+      // ethermineCoinsPerMin,
       ethermineCurrentHashrate,
       ethermineId,
       ethermineUnpaid,
       ethermineUsdPerMin,
       ethermineValidShares,
       imgPath,
+      kwh,
       price,
       // purchased,
       title,
@@ -88,23 +91,27 @@ class ProductDetail extends Component {
             <table className="table table-bordered table-striped product-detail__table">
               <tbody>
                 <tr>
+                  <td>Currently Mining:</td>
+                  <td>{coinType}</td>
+                </tr>
+                <tr>
+                  <td>Current Monthly Return:</td>
+                  <td>${(ethermineUsdPerMin * 43800).toFixed(2)}</td>
+                </tr>
+                <tr>
+                  <td>Birth Date:</td>
+                  <td>{birthDate}</td>
+                </tr>
+                <tr>
+                  <td>kWh:</td>
+                  <td>{kwh}</td>
+                </tr>
+                <tr>
                   <td>Active Workers:</td>
                   <td>{ethermineActiveWorkers}</td>
                 </tr>
                 <tr>
-                  <td>BTC/Min:</td>
-                  <td>{ethermineBtcPerMin}</td>
-                </tr>
-                <tr>
-                  <td>USD/Min:</td>
-                  <td>{ethermineUsdPerMin}</td>
-                </tr>
-                <tr>
-                  <td>Coin/Min:</td>
-                  <td>{ethermineCoinsPerMin}</td>
-                </tr>
-                <tr>
-                  <td>Avg Hashrate:</td>
+                  <td>24hr Avg Hashrate:</td>
                   <td>{ethermineAverageHashrate}</td>
                 </tr>
                 <tr>

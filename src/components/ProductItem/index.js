@@ -31,28 +31,31 @@ class ProductItem extends Component {
       hasDescription,
       hasEdit,
       id,
-      product,
       onDelete,
+      product,
+      showPurchased,
     } = this.props
 
     const {
+      coinType,
       description,
       ethermineActiveWorkers,
       ethermineAverageHashrate,
-      ethermineBtcPerMin,
-      ethermineCoinsPerMin,
+      // ethermineBtcPerMin,
+      // ethermineCoinsPerMin,
       // ethermineCurrentHashrate,
       // ethermineId,
       // ethermineUnpaid,
       ethermineUsdPerMin,
       // ethermineValidShares,
       imgPath,
+      kwh,
       price,
       purchased,
       title,
     } = product
 
-    if (purchased) {
+    if (purchased && !showPurchased) {
       return false
     }
 
@@ -68,11 +71,11 @@ class ProductItem extends Component {
           <p className="product-item__price">{price}</p>
           {hasDescription && <p>{description}</p>}
           <p className="product-item__detail">
+            <strong>Currently Mining:</strong> {coinType}<br />
+            <strong>Monthy Output:</strong> ${(ethermineUsdPerMin * 43800).toFixed(2)}<br />
             <strong>Active Workers:</strong> {ethermineActiveWorkers}<br />
-            <strong>BTC/Min:</strong> {ethermineBtcPerMin}<br />
-            <strong>USD/Min:</strong> {ethermineUsdPerMin}<br />
-            <strong>Coin/Min:</strong> {ethermineCoinsPerMin}<br />
-            <strong>Avg Hashrate:</strong> {ethermineAverageHashrate}
+            <strong>kWh:</strong> {kwh}<br />
+            <strong>24hr Avg Hashrate:</strong> {ethermineAverageHashrate}
           </p>
 
 
