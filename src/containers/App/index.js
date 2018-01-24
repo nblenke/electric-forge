@@ -15,6 +15,7 @@ import ProductList from '../ProductList/'
 import Terms from '../Terms/'
 import configureStore from '../../store'
 import ScrollToTop from '../../components/ScrollToTop'
+import Analytics from '../../components/Analytics'
 import './styles.css'
 
 const initialState = window.__INITIAL_STATE__ || { firebase: { authError: null } }
@@ -24,6 +25,7 @@ export default () => (
   <Provider store={store}>
     <Router>
       <div>
+        <Analytics />
         <ScrollToTop />
         <Header />
 
