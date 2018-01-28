@@ -15,9 +15,12 @@ class Home extends Component {
           <div className="container">
             {/*<img src={logo} alt="Logo" className="hero__logo" />*/}
             <div className="hero__copy">
-              <h2>Start Mining Today!</h2>
-              <h3>Electric Forge provides 100% of the resources and tools
-               you need to mine CryptoCoins, including BitCoin and Ethereum</h3>
+              <h2>Mining as a Service</h2>
+              <h3>Own your own mining production today!</h3>
+              <p>Electric Forge develops and supports Cryptocurrency
+              platforms and tools. Our scope is beyond any single
+              Cryptocurrency network, and we encompass many of the
+              emerging networks and exchanges.</p>
             </div>
           </div>
         </section>
@@ -25,7 +28,7 @@ class Home extends Component {
         <div className="container">
           <div className="row">
             <div className="col-xs-12">
-              <h3>Operational Rigs</h3>
+              <h3>Rigs for Sale</h3>
             </div>
           </div>
           <div className="row">
@@ -36,12 +39,12 @@ class Home extends Component {
 
           <div className="row">
             <div className="col-xs-12">
-              <h3>Available Rigs</h3>
+              <h3>See some of our Rigs in Operation</h3>
             </div>
           </div>
           <div className="row">
             <div className="col-xs-12">
-              <ProductSwiper products={products} />
+              <ProductSwiper products={products} hasPrice={false} />
             </div>
           </div>
         </div>

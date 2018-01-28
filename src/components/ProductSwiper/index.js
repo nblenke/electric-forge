@@ -10,7 +10,7 @@ export default class ProductSwiper extends Component {
   }
 
   render() {
-    const { products } = this.props
+    const { hasPrice, products } = this.props
 
     if (isEmpty(products)) {
       return false
@@ -49,8 +49,8 @@ export default class ProductSwiper extends Component {
             products[key].purchased
               ? null
               : (
-                <div key={key} data-foo={products[key].purchased}>
-                  <ProductItem id={key} product={products[key]} />
+                <div key={key}>
+                  <ProductItem id={key} product={products[key]} hasPrice={hasPrice} />
                 </div>
               )
           ))}

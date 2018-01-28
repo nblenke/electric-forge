@@ -30,18 +30,32 @@ export const getEthermineData = ( productId, product, firebase) => {
         const { data } = json
         console.log('fetching ethermine data')
 
-        firebase.update(`/products/${productId}`, {
-          ethermineActiveWorkers: data.activeWorkers,
-          ethermineBtcPerMin: data.btcPerMin,
-          ethermineAverageHashrate: data.averageHashrate,
-          ethermineCoinsPerMin: data.coinsPerMin,
-          ethermineCurrentHashrate: data.currentHashrate,
-          // ethermineLastSeen: data.lastSeen,
-          // ethermineTime: data.time,
-          ethermineUpdateNext: timeToUpdateNewEncoded,
-          ethermineUnpaid: data.unpaid,
-          ethermineUsdPerMin: data.usdPerMin,
-          ethermineValidShares: data.validShares,
+        // dev
+        // http://localhost:5001/electric-forge-dev/us-central1/updateProductEthermineData?productId=-L3K3CoyWCIMMLPCVgGt
+
+        // prod
+        // https://us-central1-electric-forge-dev.cloudfunctions.net/updateProductEthermineData?productId=-L3K3CoyWCIMMLPCVgGt
+
+        fetch(`https://us-central1-electric-forge-dev.cloudfunctions.net/updateProductEthermineData?productId=${productId}`, {
+          method: 'post',
+          mode: 'no-cors',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            ethermineActiveWorkers: data.activeWorkers,
+            ethermineBtcPerMin: data.btcPerMin,
+            ethermineAverageHashrate: data.averageHashrate,
+            ethermineCoinsPerMin: data.coinsPerMin,
+            ethermineCurrentHashrate: data.currentHashrate,
+            // ethermineLastSeen: data.lastSeen,
+            // ethermineTime: data.time,
+            ethermineUpdateNext: timeToUpdateNewEncoded,
+            ethermineUnpaid: data.unpaid,
+            ethermineUsdPerMin: data.usdPerMin,
+            ethermineValidShares: data.validShares,
+          })
         })
       })
   }

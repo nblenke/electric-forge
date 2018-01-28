@@ -30,6 +30,7 @@ class ProductItem extends Component {
       hasDelete,
       hasDescription,
       hasEdit,
+      hasPrice,
       id,
       onDelete,
       product,
@@ -42,11 +43,11 @@ class ProductItem extends Component {
       ethermineActiveWorkers,
       ethermineAverageHashrate,
       // ethermineBtcPerMin,
-      // ethermineCoinsPerMin,
+      ethermineCoinsPerMin,
       // ethermineCurrentHashrate,
       // ethermineId,
       // ethermineUnpaid,
-      ethermineUsdPerMin,
+      // ethermineUsdPerMin,
       // ethermineValidShares,
       imgPath,
       kwh,
@@ -68,14 +69,16 @@ class ProductItem extends Component {
         </Link>
         <div className="caption">
           <h3 className="product-item__title"><Link to={`/rig/${id}`}>{title}</Link></h3>
-          <p className="product-item__price">{price}</p>
+          {typeof hasPrice !== undefined && hasPrice === false
+            ? null
+            : <p className="product-item__price">{price}</p>}
           {hasDescription && <p>{description}</p>}
           <p className="product-item__detail">
             <strong>Currently Mining:</strong> {coinType}<br />
-            <strong>Monthy Output:</strong> ${(ethermineUsdPerMin * 43800).toFixed(2)}<br />
+            <strong>Current Monthly Production:</strong> {ethermineCoinsPerMin * 43800} ETH<br />
             <strong>Active Workers:</strong> {ethermineActiveWorkers}<br />
             <strong>kWh:</strong> {kwh}<br />
-            <strong>24hr Avg Hashrate:</strong> {ethermineAverageHashrate}
+            <strong>Average Hashrate:</strong> {ethermineAverageHashrate/1000000} MH/s
           </p>
 
 

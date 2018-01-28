@@ -19,6 +19,7 @@ firebase functions:config:set gmail.email="electric.forge.dev@gmail.com" gmail.p
 ## Dev
 ```
 npm start
+firebase serve --only hosting,functions
 ```
 
 ## Staging Deployment

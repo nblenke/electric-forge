@@ -6,8 +6,10 @@ import {
 import { Provider } from 'react-redux'
 import About from '../About/'
 import Admin from '../Admin/'
+import ContactUs from '../ContactUs/'
 import Footer from '../../components/Footer/'
 import Home from '../Home/'
+import HowToPurchase from '../HowToPurchase/'
 import Header from '../../components/Header/'
 import Login from '../Login/'
 import ProductDetail from '../ProductDetail/'
@@ -31,6 +33,8 @@ export default () => (
 
         <Route exact path="/" component={Home} />
         <Route exact path="/about" component={About} />
+        <Route exact path="/contact-us" component={ContactUs} />
+        <Route exact path="/how-to-purchase" component={HowToPurchase} />
         <Route exact path="/admin" component={Admin} />
         <Route exact path="/login" component={Login} />
         <Route exact path="/rig/:id" component={ProductDetail} />
