@@ -15,8 +15,6 @@
  */
 'use strict';
 
-const cors = require('cors')({origin: true});
-
 // The Firebase Admin SDK to access the Firebase Realtime Database.
 const admin = require('firebase-admin');
 
