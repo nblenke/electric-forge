@@ -27,13 +27,13 @@ class OrderItem extends Component {
     const {
       key,
       order,
+      orderId
     } = this.props
 
     const {
       createdAt,
       email,
       name,
-      orderId,
       phone,
     } = order
 

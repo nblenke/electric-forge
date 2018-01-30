@@ -14,15 +14,15 @@ export default ({
     {!isEmpty(products) ?
       Object.keys(products).map((key) => (
         <div key={key} className="col-xs-12 col-sm-4 col-md-3">
-          <ProductItem
+          {products[key].purchased && !showPurchased
+          ? null
+          : <ProductItem
             hasDelete={hasDelete}
             hasEdit={hasEdit}
             hasDescription={false}
             id={key}
             product={products[key]}
-            onDelete={onDelete}
-            showPurchased={showPurchased}
-          />
+            onDelete={onDelete} />}
         </div>
       ))
     : null}

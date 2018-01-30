@@ -33,7 +33,7 @@ class Home extends Component {
           </div>
           <div className="row">
             <div className="col-xs-12">
-              <ProductSwiper products={products} />
+              <ProductSwiper products={products} showPurchased={false} />
             </div>
           </div>
 
@@ -44,7 +44,7 @@ class Home extends Component {
           </div>
           <div className="row">
             <div className="col-xs-12">
-              <ProductSwiper products={products} hasPrice={false} />
+              <ProductSwiper products={products} hasPrice={false} showPurchased={true} />
             </div>
           </div>
         </div>

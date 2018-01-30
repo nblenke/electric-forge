@@ -86,7 +86,7 @@ class Admin extends Component {
               <table className="table table-bordered table-responsive">
                 <tbody>
                   {Object.keys(orders).map((key) => (
-                    <OrderItem key={key} order={orders[key]} />
+                    <OrderItem key={key} order={orders[key]} orderId={key} />
                   ))}
                 </tbody>
               </table>

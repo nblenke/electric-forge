@@ -15,7 +15,7 @@ class ProductList extends Component {
           </div>
         </div>
         <div className="row">
-          <ProductGrid products={products} />
+          <ProductGrid products={products} showPurchased={false} />
         </div>
       </div>
     )

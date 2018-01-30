@@ -34,7 +34,6 @@ class ProductItem extends Component {
       id,
       onDelete,
       product,
-      showPurchased,
     } = this.props
 
     const {
@@ -52,13 +51,8 @@ class ProductItem extends Component {
       imgPath,
       kwh,
       price,
-      purchased,
       title,
     } = product
-
-    if (purchased && !showPurchased) {
-      return false
-    }
 
     return (
       <div className={`product-item ${className ? className : ''}`}>
