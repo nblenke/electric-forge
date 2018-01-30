@@ -1,0 +1,20 @@
+.about-page {
+  .row {
+    margin: 0 0 20px;
+  }
+
+  .num {
+    float: left;
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    margin: 0 10px 20px 0;
+    font-size: 120%;
+    font-weight: bold;
+    background: #000;
+    color: #fff;
+    border-radius: 50%;
+    text-align: center;
+  }
+}

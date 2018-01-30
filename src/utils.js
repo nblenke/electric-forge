@@ -30,11 +30,8 @@ export const getEthermineData = ( productId, product, firebase) => {
         const { data } = json
         console.log('fetching ethermine data')
 
-        // dev
-        // http://localhost:5001/electric-forge-dev/us-central1/updateProductEthermineData?productId=-L3K3CoyWCIMMLPCVgGt
-
-        // prod
-        // https://us-central1-electric-forge-dev.cloudfunctions.net/updateProductEthermineData?productId=-L3K3CoyWCIMMLPCVgGt
+        // dev: http://localhost:5001/electric-forge-dev/us-central1/
+        // prod: https://us-central1-electric-forge-dev.cloudfunctions.net
 
         fetch(`https://us-central1-electric-forge-dev.cloudfunctions.net/updateProductEthermineData?productId=${productId}`, {
           method: 'post',

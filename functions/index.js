@@ -48,7 +48,7 @@ const APP_NAME = 'Electric Forge';
 
 admin.initializeApp(functions.config().firebase);
 
-exports.messenger = functions.database
+exports.purchaseMessenger = functions.database
   .ref('/orders/{orderId}').onWrite(event => {
     const { email, firstName, orderId } = event.data._delta;
 
@@ -66,6 +66,28 @@ exports.messenger = functions.database
       console.log(`email sent to: ${email}`);
     });
   });
+
+exports.contactUsMessenger = functions.https.onRequest((req, res) => {
+  const props = JSON.parse(req.body);
+  const { bestTime, comments, email, name, phone} = props;
+
+  const mailOptions = {
+    from: `${APP_NAME} <noreply@firebase.com>`,
+    to: 'electric.forge.dev@gmail.com'// commercial.sales@electricforge.us
+  };
+
+  let body = `Contact request from ${email}.\n`;
+  body += `Name: ${name}\n`;
+  body += `Best Time to Contact: ${bestTime}\n`;
+  body += `Phone: ${phone}\n`;
+  body += `Comments: ${comments}\n`;
+
+  mailOptions.subject = `Welcome to ${APP_NAME}!`;
+  mailOptions.text = body;
+  return mailTransport.sendMail(mailOptions).then(() => {
+    console.log(`email sent to: ${email}`);
+  });
+});
 
 
 // Take the text parameter passed to this HTTP endpoint and insert it into the

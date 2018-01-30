@@ -55,16 +55,16 @@ class ProductDetail extends Component {
       ethermineActiveWorkers,
       ethermineAverageHashrate,
       // ethermineBtcPerMin,
-      // ethermineCoinsPerMin,
-      ethermineCurrentHashrate,
+      ethermineCoinsPerMin,
+      // ethermineCurrentHashrate,
       ethermineId,
       ethermineUnpaid,
-      ethermineUsdPerMin,
-      ethermineValidShares,
+      // ethermineUsdPerMin,
+      // ethermineValidShares,
       imgPath,
       kwh,
       price,
-      // purchased,
+      purchased,
       title,
     } = product
 
@@ -81,9 +81,14 @@ class ProductDetail extends Component {
 
           <div className="col-xs-12 col-sm-9">
             <h3 className="product-detail__title">{title}</h3>
-            <h4 className="product-detail__price"><strong>Price:</strong> {price}</h4>
+            {purchased
+            ? null
+            : <h4 className="product-detail__price"><strong>Price:</strong> {price}</h4>}
             <p className="product-detail__description">{description}</p>
-            <p className="product-detail__miner-id"><strong>Miner Id:</strong> {ethermineId}</p>
+            <p className="product-detail__miner-id">
+              <strong>Miner Id:</strong>{' '}
+              <a href={`https://ethermine.org/miners/${ethermineId}`} target="_blank">{ethermineId}</a>
+            </p>
           </div>
         </div>
         <div className="row">
@@ -91,16 +96,16 @@ class ProductDetail extends Component {
             <table className="table table-bordered table-striped product-detail__table">
               <tbody>
                 <tr>
+                  <td>Birth Date:</td>
+                  <td>{birthDate}</td>
+                </tr>
+                <tr>
                   <td>Currently Mining:</td>
                   <td>{coinType}</td>
                 </tr>
                 <tr>
-                  <td>Current Monthly Return:</td>
-                  <td>${(ethermineUsdPerMin * 43800).toFixed(2)}</td>
-                </tr>
-                <tr>
-                  <td>Birth Date:</td>
-                  <td>{birthDate}</td>
+                  <td>Current Monthly Production:</td>
+                  <td>{(ethermineCoinsPerMin * 43800).toFixed(5)} ETH</td>
                 </tr>
                 <tr>
                   <td>kWh:</td>
@@ -111,16 +116,8 @@ class ProductDetail extends Component {
                   <td>{ethermineActiveWorkers}</td>
                 </tr>
                 <tr>
-                  <td>24hr Avg Hashrate:</td>
-                  <td>{ethermineAverageHashrate}</td>
-                </tr>
-                <tr>
-                  <td>Current Hashrate:</td>
-                  <td>{ethermineCurrentHashrate}</td>
-                </tr>
-                <tr>
-                  <td>Valid Shares:</td>
-                  <td>{ethermineValidShares}</td>
+                  <td>24 Hour Avg Hashrate:</td>
+                  <td>{ethermineAverageHashrate/1000000} MH/s</td>
                 </tr>
                 <tr>
                   <td>Unpaid Balance (in base units):</td>
@@ -129,7 +126,9 @@ class ProductDetail extends Component {
               </tbody>
             </table>
 
-            <button className="btn btn-primary btn-lg" onClick={this.handleShow}>Purchase Rig</button>
+            {purchased
+            ? null
+            : <button className="btn btn-primary btn-lg" onClick={this.handleShow}>Purchase Rig</button>}
           </div>
         </div>
 

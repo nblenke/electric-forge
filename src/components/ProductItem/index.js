@@ -75,10 +75,10 @@ class ProductItem extends Component {
           {hasDescription && <p>{description}</p>}
           <p className="product-item__detail">
             <strong>Currently Mining:</strong> {coinType}<br />
-            <strong>Current Monthly Production:</strong> {ethermineCoinsPerMin * 43800} ETH<br />
+            <strong>Current Monthly Production:</strong> {(ethermineCoinsPerMin * 43800).toFixed(5)} ETH<br />
             <strong>Active Workers:</strong> {ethermineActiveWorkers}<br />
             <strong>kWh:</strong> {kwh}<br />
-            <strong>Average Hashrate:</strong> {ethermineAverageHashrate/1000000} MH/s
+            <strong>24 Hour Avg Hashrate:</strong> {ethermineAverageHashrate/1000000} MH/s
           </p>
 
 

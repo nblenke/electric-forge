@@ -53,7 +53,10 @@ class Purchase extends Component {
           </div>
         ) : (
           <form onSubmit={this.handleSubmit}>
-            <p>You are purchasing:</p>
+            <p>Thank you for your interest in {title}. Please complete the
+            form below and someone from Electric Forge will contact you in
+            the next 24 hours to arrange payment and to transfer the
+            rig to your account.</p>
             <div className="panel panel-default">
               <div className="panel-heading">{title}</div>
               <div className="panel-body">

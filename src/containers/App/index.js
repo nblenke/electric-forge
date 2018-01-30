@@ -12,6 +12,7 @@ import Home from '../Home/'
 import HowToPurchase from '../HowToPurchase/'
 import Header from '../../components/Header/'
 import Login from '../Login/'
+import Msa from '../Msa'
 import ProductDetail from '../ProductDetail/'
 import ProductList from '../ProductList/'
 import Terms from '../Terms/'
@@ -40,6 +41,7 @@ export default () => (
         <Route exact path="/rig/:id" component={ProductDetail} />
         <Route exact path="/rigs" component={ProductList} />
         <Route exact path="/terms" component={Terms} />
+        <Route exact path="/msa" component={Msa} />
 
         <Footer />
       </div>

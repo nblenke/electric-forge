@@ -21,7 +21,7 @@ export default () => (
         you. The minimum order is $50,000. You can complete this contact
         form or send an email to commercial.sales@electricforge.us.</p>
 
-        <p>Our MSA can be found <Link to="/">here</Link>.</p>
+        <p>Our MSA can be found <Link to="/msa">here</Link>.</p>
       </div>
     </div>
   </div>
