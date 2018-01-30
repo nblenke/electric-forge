@@ -3,7 +3,9 @@ import { compose } from 'redux'
 import { connect } from 'react-redux'
 import { firebaseConnect } from 'react-redux-firebase'
 import { Field, reduxForm } from 'redux-form'
+import Captcha from '../Captcha'
 import Input from '../Input'
+import Loading from '../Loading'
 import './styles.css'
 
 class Purchase extends Component {
@@ -11,6 +13,7 @@ class Purchase extends Component {
     super(props)
     this.state = {
       errorMsg: null,
+      sending: false,
       success: false
     }
   }
@@ -21,23 +24,38 @@ class Purchase extends Component {
 
   handleSubmit = (ev) => {
     ev.preventDefault()
-    const { firebase, id } = this.props
+    const { id } = this.props
+    const payload = Object.assign({}, this.props.forms.purchaseForm.values)
 
-    firebase.setWithMeta(`/orders/${id}`, {
-      email: this.email.value,
-      firstName: this.firstName.value,
-      lastName: this.lastName.value,
-      phone: this.phone.value,
-      orderId: id,
-    }).catch((error) => {
-      this.setState({ errorMsg: error.message })
+    payload.orderId = id
+    payload.createdAt = Date.now()
+    delete payload.captcharesponse
+    delete payload.confirmEmail
+
+    this.setState({ sending: true })
+
+    fetch('https://us-central1-electric-forge-dev.cloudfunctions.net/purchase', {
+      method: 'post',
+      mode: 'no-cors',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(payload)
     })
-
-    firebase.update(`/products/${id}`, {
-      purchased: true
+    .then(() => {
+      this.setState({
+        sending: false,
+        success: true
+      })
     })
-
-    this.setState({ success: true })
+    .catch((error) => {
+      console.log(error)
+      this.setState({
+        errorMsg: 'An Error Occurred',
+        sending: false
+      })
+    })
   }
 
   render () {
@@ -142,11 +160,24 @@ class Purchase extends Component {
               </div>
             </div>
 
+            <div className="form-group recaptcha-container">
+              <label className="sr-only" htmlFor="recaptcha">
+                Recaptcha
+              </label>
+              <Field name="captcharesponse" component={Captcha} />
+              {/* Hidden label for hidden Recaptcha generated textarea field */}
+              <label className="sr-only" aria-hidden="true" htmlFor="g-recaptcha-response">
+                Recaptcha Response
+              </label>
+            </div>
+
             <div className="form-group">
-              <button
-                type="submit"
-                className="btn btn-primary btn-lg"
-                disabled={pristine || submitting || invalid}>Submit</button>
+              {this.state.sending
+                ? <Loading />
+                : <button
+                  type="submit"
+                  className="btn btn-primary btn-lg"
+                  disabled={pristine || submitting || invalid}>Submit</button>}
             </div>
 
             {this.state.errorMsg ? (
@@ -160,17 +191,21 @@ class Purchase extends Component {
   }
 }
 
+const mapStateToProps = state => ({
+  forms: state.form,
+})
+
 export default compose(
+  connect(mapStateToProps),
   firebaseConnect([
     'orders',
     'products',
   ]),
   connect(
     ({
-      firebase: { auth, authError, forms, profile, data: { orders, products }} }) => ({
+      firebase: { auth, authError, profile, data: { orders, products }} }) => ({
       auth,
       authError,
-      forms,
       products,
       profile,
     })
@@ -179,6 +214,7 @@ export default compose(
     destroyOnUnmount: false,
     enableReinitialize: true,
     form: 'purchaseForm',
+    fields: ['captcharesponse'],
     keepDirtyOnReinitialize: true,
     validate: values => {
       const errors = {}
@@ -208,6 +244,10 @@ export default compose(
 
       if (!values.phone) {
         errors.phone = 'This field is required'
+      }
+
+      if (!values.captcharesponse) {
+        errors.captcharesponse = 'This field is required'
       }
 
       return errors

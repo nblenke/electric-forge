@@ -32,8 +32,7 @@ class OrderItem extends Component {
     const {
       createdAt,
       email,
-      firstName,
-      lastName,
+      name,
       orderId,
       phone,
     } = order
@@ -50,7 +49,7 @@ class OrderItem extends Component {
             <Modal.Body>
               <p>
                 Date: {Moment(createdAt).format("YYYY-MM-DD hh:mma")}<br />
-                Name: {firstName} {lastName}<br />
+                Name: {name}<br />
                 Email: {email}<br />
                 Phone: {phone}<br />
               </p>

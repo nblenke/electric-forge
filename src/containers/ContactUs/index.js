@@ -2,8 +2,10 @@ import React, { Component } from 'react'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
 import { Field, reduxForm } from 'redux-form'
+import Captcha from '../../components/Captcha'
 import Input from '../../components/Input'
 import TextArea from '../../components/TextArea'
+import Loading from '../../components/Loading'
 import './styles.css'
 
 class ContactUs extends Component {
@@ -11,6 +13,7 @@ class ContactUs extends Component {
     super(props)
     this.state = {
       errorMsg: null,
+      sending: false,
       success: false
     }
   }
@@ -21,9 +24,7 @@ class ContactUs extends Component {
 
   handleSubmit = (ev) => {
     ev.preventDefault()
-
-    // dev: http://localhost:5001/electric-forge-dev/us-central1/
-    // prod: https://us-central1-electric-forge-dev.cloudfunctions.net
+    this.setState({ sending: true })
 
     fetch('https://us-central1-electric-forge-dev.cloudfunctions.net/contactUsMessenger', {
       method: 'post',
@@ -35,11 +36,17 @@ class ContactUs extends Component {
       body: JSON.stringify(this.props.forms.contactUsForm.values)
     })
     .then(() => {
-      this.setState({ success: true })
+      this.setState({
+        sending: false,
+        success: true
+      })
     })
     .catch((error) => {
       console.log(error)
-      this.setState({ errorMsg: 'An Error Occurred' })
+      this.setState({
+        errorMsg: 'An Error Occurred',
+        sending: false
+      })
     })
   }
 
@@ -136,11 +143,24 @@ class ContactUs extends Component {
               </div>
             </div>
 
+            <div className="form-group recaptcha-container">
+              <label className="sr-only" htmlFor="recaptcha">
+                Recaptcha
+              </label>
+              <Field name="captcharesponse" component={Captcha} />
+              {/* Hidden label for hidden Recaptcha generated textarea field */}
+              <label className="sr-only" aria-hidden="true" htmlFor="g-recaptcha-response">
+                Recaptcha Response
+              </label>
+            </div>
+
             <div className="form-group">
-              <button
-                type="submit"
-                className="btn btn-primary btn-lg"
-                disabled={pristine || submitting || invalid}>Submit</button>
+              {this.state.sending
+                ? <Loading />
+                : <button
+                  type="submit"
+                  className="btn btn-primary btn-lg"
+                  disabled={pristine || submitting || invalid}>Submit</button>}
             </div>
 
             {this.state.errorMsg ? (
@@ -162,6 +182,7 @@ export default compose(
   reduxForm({
     destroyOnUnmount: false,
     enableReinitialize: true,
+    fields: ['captcharesponse'],
     form: 'contactUsForm',
     keepDirtyOnReinitialize: true,
     validate: values => {
@@ -188,6 +209,10 @@ export default compose(
 
       if (!values.phone) {
         errors.phone = 'This field is required'
+      }
+
+      if (!values.captcharesponse) {
+        errors.captcharesponse = 'This field is required'
       }
 
       return errors

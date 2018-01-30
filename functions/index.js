@@ -32,40 +32,71 @@ const nodemailer = require('nodemailer');
 // For other types of transports such as Sendgrid see https://nodemailer.com/transports/
 // TODO: Configure the `gmail.email` and `gmail.password` Google Cloud environment variables.
 
-if (functions.config().gmail) {
-  const gmailEmail = functions.config().gmail.email;
-  const gmailPassword = functions.config().gmail.password;
-  const mailTransport = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-      user: gmailEmail,
-      pass: gmailPassword
-    }
-  });
-}
+const gmailEmail = functions.config().gmail.email;
+const gmailPassword = functions.config().gmail.password;
+const mailTransport = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: gmailEmail,
+    pass: gmailPassword
+  }
+});
 
 const APP_NAME = 'Electric Forge';
 
 admin.initializeApp(functions.config().firebase);
 
-exports.purchaseMessenger = functions.database
-  .ref('/orders/{orderId}').onWrite(event => {
-    const { email, firstName, orderId } = event.data._delta;
+exports.purchase = functions.https.onRequest((req, res) => {
+  const props = JSON.parse(req.body);
+  const { createdAt, email, firstName, lastName, orderId, phone} = props;
 
-    const mailOptions = {
-      from: `${APP_NAME} <noreply@firebase.com>`,
-      to: `${email}, electric.forge.dev@gmail.com`
-    };
+  const mailOptions = {
+    from: `${APP_NAME} <noreply@firebase.com>`,
+    to: `${email}, electric.forge.dev@gmail.com`
+  };
 
-    let body = `Hey ${firstName}! Welcome to ${APP_NAME}.\n`;
-    body += `Your order(#${orderId}) has been placed and a representative will contact you shortly.\n`;
+  let body = `Hey ${firstName}! Welcome to ${APP_NAME}.\n`;
+  body += `Your order(#${orderId}) has been placed and a representative will contact you shortly.\n`;
 
-    mailOptions.subject = `Welcome to ${APP_NAME}!`;
-    mailOptions.text = body;
-    return mailTransport.sendMail(mailOptions).then(() => {
+  mailOptions.subject = `Welcome to ${APP_NAME}!`;
+  mailOptions.text = body;
+  return mailTransport.sendMail(mailOptions)
+    .then(() => {
       console.log(`email sent to: ${email}`);
+
+      admin.database().ref(`/orders/${orderId}`).set({
+        createdAt,
+        email,
+        name: `${firstName} ${lastName}`,
+        phone,
+      })
+
+      admin.database().ref(`/products/${orderId}`).update({
+        purchased: true
+      });
+
+      res.json({ status: 'success' });
     });
-  });
+});
+
+// exports.purchaseMessenger = functions.database
+//   .ref('/orders/{orderId}').onWrite(event => {
+//     const { email, firstName, orderId } = event.data._delta;
+//
+//     const mailOptions = {
+//       from: `${APP_NAME} <noreply@firebase.com>`,
+//       to: `${email}, electric.forge.dev@gmail.com`
+//     };
+//
+//     let body = `Hey ${firstName}! Welcome to ${APP_NAME}.\n`;
+//     body += `Your order(#${orderId}) has been placed and a representative will contact you shortly.\n`;
+//
+//     mailOptions.subject = `Welcome to ${APP_NAME}!`;
+//     mailOptions.text = body;
+//     return mailTransport.sendMail(mailOptions).then(() => {
+//       console.log(`email sent to: ${email}`);
+//     });
+//   });
 
 exports.contactUsMessenger = functions.https.onRequest((req, res) => {
   const props = JSON.parse(req.body);
@@ -73,20 +104,22 @@ exports.contactUsMessenger = functions.https.onRequest((req, res) => {
 
   const mailOptions = {
     from: `${APP_NAME} <noreply@firebase.com>`,
-    to: 'electric.forge.dev@gmail.com'// commercial.sales@electricforge.us
+    to: 'electric.forge.dev@gmail.com, commercial.sales@electricforge.us'
   };
 
   let body = `Contact request from ${email}.\n`;
   body += `Name: ${name}\n`;
-  body += `Best Time to Contact: ${bestTime}\n`;
+  body += `Best Time to Contact: ${bestTime ? bestTime : ''}\n`;
   body += `Phone: ${phone}\n`;
-  body += `Comments: ${comments}\n`;
+  body += `Comments: ${comments ? comments : ''}\n`;
 
-  mailOptions.subject = `Welcome to ${APP_NAME}!`;
+  mailOptions.subject = `New Contact Request`;
   mailOptions.text = body;
-  return mailTransport.sendMail(mailOptions).then(() => {
-    console.log(`email sent to: ${email}`);
-  });
+  return mailTransport.sendMail(mailOptions)
+    .then(() => {
+      console.log(`email sent to: ${email}`);
+      res.json({ status: 'success' });
+    });
 });
 
 
