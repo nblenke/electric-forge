@@ -84,13 +84,14 @@ class ProductDetail extends Component {
             {purchased
             ? null
             : <h4 className="product-detail__price"><strong>Price:</strong> {price}</h4>}
-            <p className="product-detail__description">{description}</p>
             <p className="product-detail__miner-id">
               <strong>Miner Id:</strong>{' '}
               <a href={`https://ethermine.org/miners/${ethermineId}`} target="_blank">{ethermineId}</a>
             </p>
+            <p className="product-detail__description">{description}</p>
           </div>
         </div>
+        <br />
         <div className="row">
           <div className="col-xs-12">
             <table className="table table-bordered table-striped product-detail__table">
@@ -117,7 +118,7 @@ class ProductDetail extends Component {
                 </tr>
                 <tr>
                   <td>24 Hour Avg Hashrate:</td>
-                  <td>{ethermineAverageHashrate/1000000} MH/s</td>
+                  <td>{(ethermineAverageHashrate/1000000).toFixed(1)} MH/s</td>
                 </tr>
                 <tr>
                   <td>Unpaid Balance (in base units):</td>

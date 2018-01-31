@@ -1,0 +1,38 @@
+.product-list__title {
+  padding: 10px 0;
+}
+
+.product-list {
+  .list-view {
+
+    .product-item {
+      display: flex;
+      padding: 10px 0 20px;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .product-item__image-link {
+      flex: 0 1 200px;
+      margin: 10px 20px 0 0;
+    }
+
+    .caption {
+      flex: auto;
+    }
+
+    .product-item__image {
+
+    }
+
+  }
+}
+
+.product-list__view-toggle {
+  .btn:focus {
+    outline: none;
+  }
+
+  i {
+    color: #777;
+  }
+}

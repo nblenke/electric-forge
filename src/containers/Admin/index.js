@@ -100,6 +100,7 @@ class Admin extends Component {
             hasDelete={true}
             hasEdit={true}
             hasActiveToggle={true}
+            hasPurchaseBtn={false}
             products={products}
             showPurchased={true}
             uid={auth.uid}

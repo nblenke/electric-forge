@@ -3,6 +3,7 @@ import { compose } from 'redux'
 import { connect } from 'react-redux'
 import { firebaseConnect } from 'react-redux-firebase'
 import ProductSwiper from '../../components/ProductSwiper'
+import { Link } from 'react-router-dom'
 import './styles.css'
 // import logo from './logo1.png'
 
@@ -28,7 +29,7 @@ class Home extends Component {
         <div className="container">
           <div className="row">
             <div className="col-xs-12">
-              <h3>Rigs for Sale</h3>
+              <h3>Rigs for Sale <Link className="home-page__show-all" to="/rigs">Show All</Link></h3>
             </div>
           </div>
           <div className="row">
@@ -44,7 +45,7 @@ class Home extends Component {
           </div>
           <div className="row">
             <div className="col-xs-12">
-              <ProductSwiper products={products} hasPrice={false} showPurchased={true} />
+              <ProductSwiper products={products} hasPrice={false} showPurchased={true} hideAvail={true} />
             </div>
           </div>
         </div>

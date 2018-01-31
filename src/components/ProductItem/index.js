@@ -31,6 +31,7 @@ class ProductItem extends Component {
       hasDescription,
       hasEdit,
       hasPrice,
+      hasPurchaseBtn,
       id,
       onDelete,
       product,
@@ -51,12 +52,13 @@ class ProductItem extends Component {
       imgPath,
       kwh,
       price,
+      purchased,
       title,
     } = product
 
     return (
       <div className={`product-item ${className ? className : ''}`}>
-        <Link to={`/rig/${id}`}>
+        <Link to={`/rig/${id}`} className="product-item__image-link">
           {imgPath ? (
             <div className="product-item__image" style={{ backgroundImage: `url(${imgPath})` }} />
           ) : <div className="product-item__no-image"></div> }
@@ -72,22 +74,26 @@ class ProductItem extends Component {
             <strong>Current Monthly Production:</strong> {(ethermineCoinsPerMin * 43800).toFixed(5)} ETH<br />
             <strong>Active Workers:</strong> {ethermineActiveWorkers}<br />
             <strong>kWh:</strong> {kwh}<br />
-            <strong>24 Hour Avg Hashrate:</strong> {ethermineAverageHashrate/1000000} MH/s
+            <strong>24 Hour Avg Hashrate:</strong> {(ethermineAverageHashrate/1000000).toFixed(1)} MH/s
           </p>
-
+          {purchased || hasPurchaseBtn === false
+            ? null
+            : <Link to={`/rig/${id}`} className="btn btn-primary">Purchase</Link>}
 
           <div className="row">
-            {hasDelete ?
-              <button className="btn btn-default" onClick={(ev) => onDelete(id, imgPath)}>
-                Delete
-              </button>
-            : null}
+            <div className="col-xs-12">
+              {hasDelete ?
+                <button className="btn btn-default" onClick={(ev) => onDelete(id, imgPath)}>
+                  Delete
+                </button>
+              : null}
 
-            {hasEdit ?
-              <button className="btn btn-default" onClick={this.handleShow}>
-                Edit
-              </button>
-            : null}
+              {hasEdit ?
+                <button className="btn btn-default" onClick={this.handleShow}>
+                  Edit
+                </button>
+              : null}
+            </div>
           </div>
         </div>
 
